@@ -25,7 +25,7 @@ public class CommandReader {
         while (performanceStatus) {
             try {
                 OutputUtil.printSuccessfulMessageOneStrip("Введите команду: ");
-                String line = sc.nextLine();
+                String line = sc.nextLine().replaceAll("[\\s]{2,}", " ").strip();
                 manager.performCommand(line);
             } catch (NoSuchElementException e) {
                 OutputUtil.printErrorMessage("Введен недопустимый символ");

@@ -24,6 +24,10 @@ public abstract class AbstractCommand {
         return name;
     }
 
+    public int getNumberOfArgs() {
+        return numberOfArgs;
+    }
+
     public String getCommandDescription() {
         return commandDescription;
     }

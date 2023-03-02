@@ -1,6 +1,10 @@
 package commands;
 
 import commandLine.CommandReader;
+import exceptions.InvalidNumberOfArgs;
+import jdk.jshell.execution.Util;
+import util.OutputUtil;
+import util.Validators;
 
 public class ExitCommand extends AbstractCommand {
     public ExitCommand() {
@@ -9,7 +13,12 @@ public class ExitCommand extends AbstractCommand {
 
     @Override
     public void executeCommand(String[] commandArgs) {
-        System.out.println("Завершение работы.");
-        CommandReader.togglePerformanceStatus();
+        try {
+            Validators.ValidateNumberOfArgs(commandArgs, this.getNumberOfArgs());
+            System.out.println("Завершение работы.");
+            CommandReader.togglePerformanceStatus();
+        } catch (InvalidNumberOfArgs e) {
+            OutputUtil.printErrorMessage(e.getMessage());
+        }
     }
 }
