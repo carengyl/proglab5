@@ -28,10 +28,6 @@ public abstract class AbstractCommand {
         return numberOfArgs;
     }
 
-    public String getCommandDescription() {
-        return commandDescription;
-    }
-
     public abstract void executeCommand(String[] commandArgs);
 
     @Override

@@ -8,7 +8,7 @@ import util.Validators;
 
 public class ExitCommand extends AbstractCommand {
     public ExitCommand() {
-        super("exit", "завершить работу с коллекцией (все несохраненные изменения будут потеряны)");
+        super("exit", "завершает работу с коллекцией (все несохраненные изменения будут потеряны)");
     }
 
     @Override

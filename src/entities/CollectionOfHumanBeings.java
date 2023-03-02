@@ -6,8 +6,8 @@ import java.util.HashMap;
 import java.util.Objects;
 
 public class CollectionOfHumanBeings {
-    private String fileName;
-    private HashMap<Long, HumanBeing> humanBeings;
+    private final String fileName;
+    private final HashMap<Long, HumanBeing> humanBeings;
 
     public CollectionOfHumanBeings(String fileName) {
         this.fileName = fileName;
@@ -18,8 +18,8 @@ public class CollectionOfHumanBeings {
         humanBeings.put(humanBeing.getId(), humanBeing);
     }
 
-    public void addHumanBeingById(Long id, HumanBeing humanBeing) {
-        humanBeings.put(id, humanBeing);
+    public void addByKey(HumanBeing humanBeing, long key) {
+        humanBeings.put(key, humanBeing);
     }
 
     public HashMap<Long, HumanBeing> getHumanBeings() {
@@ -52,5 +52,9 @@ public class CollectionOfHumanBeings {
                 System.out.println("Удален элемент с ключом: " + key);
             }
         }
+    }
+
+    public HashMap<Long, HumanBeing> getCollection() {
+        return humanBeings;
     }
 }

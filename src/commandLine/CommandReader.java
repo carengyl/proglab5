@@ -1,6 +1,9 @@
 package commandLine;
 
 import commands.ExitCommand;
+import commands.HelpCommand;
+import commands.HistoryCommand;
+import util.CommandHistory;
 import util.CommandManager;
 import util.OutputUtil;
 
@@ -17,7 +20,10 @@ public class CommandReader {
     private CommandManager manager;
 
     public CommandReader() {
-        manager = new CommandManager(new ExitCommand());
+        manager = new CommandManager(
+                new ExitCommand(),
+                new HelpCommand(CommandManager.AVAILABLE_COMMANDS),
+                new HistoryCommand(CommandManager.commandHistory));
     }
 
     public void readCommandsFromConsole() {
