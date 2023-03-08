@@ -1,8 +1,7 @@
 package commands;
 
 import commandLine.CommandReader;
-import exceptions.InvalidNumberOfArgs;
-import jdk.jshell.execution.Util;
+import exceptions.InvalidNumberOfArgsException;
 import util.OutputUtil;
 import util.Validators;
 
@@ -17,7 +16,7 @@ public class ExitCommand extends AbstractCommand {
             Validators.ValidateNumberOfArgs(commandArgs, this.getNumberOfArgs());
             System.out.println("Завершение работы.");
             CommandReader.togglePerformanceStatus();
-        } catch (InvalidNumberOfArgs e) {
+        } catch (InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }
     }

@@ -22,10 +22,10 @@ public class Car {
 
     @Override
     public String toString() {
-        return ((cool) ? "Крутая ": "Такая себе") + "машина: "
+        return ((cool) ? "Крутая ": "Такая себе ") + "машина: "
                 + "Название: " + name
-                + "; Стоимость: " + cost
-                + "; Мощность: " + horsePowers + "л.с."
-                + "; марка: " + carBrand;
+                + "; Стоимость: " + cost + " тугриков"
+                + "; Мощность: " + horsePowers + " л.с."
+                + "; Марка: " + carBrand;
     }
 }

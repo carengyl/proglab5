@@ -9,10 +9,16 @@ public class CommandManager {
     public static final HashMap<String, AbstractCommand> AVAILABLE_COMMANDS = new HashMap<>();
     public static CommandHistory commandHistory = new CommandHistory();
 
-    public CommandManager(AbstractCommand exitCommand, AbstractCommand helpCommand, AbstractCommand historyCommand) {
+    public CommandManager(AbstractCommand exitCommand,
+                          AbstractCommand helpCommand,
+                          AbstractCommand historyCommand,
+                          AbstractCommand addCommand,
+                          AbstractCommand showCommand) {
         AVAILABLE_COMMANDS.put(exitCommand.getName(), exitCommand);
         AVAILABLE_COMMANDS.put(helpCommand.getName(), helpCommand);
         AVAILABLE_COMMANDS.put(historyCommand.getName(), historyCommand);
+        AVAILABLE_COMMANDS.put(addCommand.getName(), addCommand);
+        AVAILABLE_COMMANDS.put(showCommand.getName(), showCommand);
     }
 
     public void performCommand(String command){

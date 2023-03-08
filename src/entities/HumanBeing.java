@@ -12,6 +12,7 @@ public class HumanBeing {
     private Boolean realHero; //Поле не может быть null
     private boolean hasToothpick;
     private Double impactSpeed; //Значение поля должно быть больше -611, Поле может быть null
+    private static final Double MIN_IMPACT_SPEED = (double) -611;
     private Double minutesOfWaiting; //Поле может быть null
     private WeaponType weaponType; //Поле не может быть null
     private Mood mood; //Поле не может быть null
@@ -20,6 +21,15 @@ public class HumanBeing {
     public HumanBeing() {
         creationDate = LocalDate.now();
         id = currentId++;
+    }
+
+    public HumanBeing(long id) {
+        creationDate = LocalDate.now();
+        this.id = id;
+    }
+
+    public static Double getMinImpactSpeed() {
+        return MIN_IMPACT_SPEED;
     }
 
     public void setName(String name) {
@@ -58,10 +68,6 @@ public class HumanBeing {
         this.car = car;
     }
 
-    public LocalDate getCreationDate() {
-        return creationDate;
-    }
-
     public Long getId() {
         return id;
     }
@@ -72,11 +78,12 @@ public class HumanBeing {
                 + "; Имя: " + this.name
                 + "; Координаты: " + this.coordinates
                 + "; Создан: " + creationDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-                + ";" + ((this.realHero) ? "Герой" : "Злодей")
-                + ((this.hasToothpick) ? " С зубочисткой во рту" : "")
-                + "; Скорость удара: " + ((this.impactSpeed == null) ? "неизвестна" : this.impactSpeed)
-                + "Время ожидания: " + ((this.minutesOfWaiting == null) ? "неизвестно" : this.minutesOfWaiting)
-                + "Настроение: " + this.mood
-                + "Машина: " + ((this.car == null) ? "отсутствует": this.car);
+                + "; " + ((this.realHero) ? "Герой" : "Злодей")
+                + ((this.hasToothpick) ? " c зубочисткой во рту" : "")
+                + "; Скорость удара: " + ((this.impactSpeed == null) ? "неизвестна" : this.impactSpeed + " м/с")
+                + "; Время ожидания: " + ((this.minutesOfWaiting == null) ? "неизвестно" : this.minutesOfWaiting + " минут")
+                + "; Оружие: " + this.weaponType
+                + "; Настроение: " + this.mood
+                + "; " + ((this.car == null) ? "Без машины": "Транспорт: " + this.car);
     }
 }

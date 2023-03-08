@@ -1,9 +1,7 @@
 package commandLine;
 
-import commands.ExitCommand;
-import commands.HelpCommand;
-import commands.HistoryCommand;
-import util.CommandHistory;
+import commands.*;
+import entities.CollectionOfHumanBeings;
 import util.CommandManager;
 import util.OutputUtil;
 
@@ -17,13 +15,15 @@ public class CommandReader {
         performanceStatus = !performanceStatus;
     }
 
-    private CommandManager manager;
+    private final CommandManager manager;
 
-    public CommandReader() {
+    public CommandReader(CollectionOfHumanBeings collectionOfHumanBeings) {
         manager = new CommandManager(
                 new ExitCommand(),
                 new HelpCommand(CommandManager.AVAILABLE_COMMANDS),
-                new HistoryCommand(CommandManager.commandHistory));
+                new HistoryCommand(CommandManager.commandHistory),
+                new AddCommand(collectionOfHumanBeings),
+                new ShowCommand(collectionOfHumanBeings));
     }
 
     public void readCommandsFromConsole() {
@@ -31,7 +31,7 @@ public class CommandReader {
         while (performanceStatus) {
             try {
                 OutputUtil.printSuccessfulMessageOneStrip("Введите команду: ");
-                String line = sc.nextLine().replaceAll("[\\s]{2,}", " ").strip();
+                String line = sc.nextLine().replaceAll("\\s{2,}", " ").strip();
                 manager.performCommand(line);
             } catch (NoSuchElementException e) {
                 OutputUtil.printErrorMessage("Введен недопустимый символ");

@@ -14,6 +14,10 @@ public class CollectionOfHumanBeings {
         humanBeings = new HashMap<>();
     }
 
+    public String getFileName() {
+        return fileName;
+    }
+
     public void addHumanBeing(HumanBeing humanBeing) {
         humanBeings.put(humanBeing.getId(), humanBeing);
     }

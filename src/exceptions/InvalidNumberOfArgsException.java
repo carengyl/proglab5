@@ -1,7 +1,7 @@
 package exceptions;
 
-public class InvalidNumberOfArgs extends Exception {
-    public InvalidNumberOfArgs(int correctNumberOfArgs, int gotNumberOfArgs) {
+public class InvalidNumberOfArgsException extends Exception {
+    public InvalidNumberOfArgsException(int correctNumberOfArgs, int gotNumberOfArgs) {
         super("Ожидалось аргументов: " + correctNumberOfArgs + ", получено: " + gotNumberOfArgs);
     }
 }

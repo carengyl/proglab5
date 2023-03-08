@@ -1,6 +1,6 @@
 package commands;
 
-import exceptions.InvalidNumberOfArgs;
+import exceptions.InvalidNumberOfArgsException;
 import util.CommandHistory;
 import util.OutputUtil;
 import util.Validators;
@@ -20,7 +20,7 @@ public class HistoryCommand extends AbstractCommand {
             for (String command: historyCommand.getHistory()) {
                 OutputUtil.printSuccessfulMessage(command);
             }
-        } catch (InvalidNumberOfArgs e) {
+        } catch (InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }
     }

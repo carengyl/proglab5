@@ -1,6 +1,6 @@
 package commands;
 
-import exceptions.InvalidNumberOfArgs;
+import exceptions.InvalidNumberOfArgsException;
 import util.OutputUtil;
 import util.Validators;
 
@@ -18,11 +18,11 @@ public class HelpCommand extends AbstractCommand{
     public void executeCommand(String[] commandArgs) {
         try {
             Validators.ValidateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            System.out.println("Список доступных команд:");
+            OutputUtil.printSuccessfulMessage("Список доступных команд:");
             for (AbstractCommand command: AVAILABLE_COMMANDS.values()) {
-                System.out.println(command);
+                OutputUtil.printSuccessfulMessage(command);
             }
-        } catch (InvalidNumberOfArgs e) {
+        } catch (InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }
     }

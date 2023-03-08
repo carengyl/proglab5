@@ -1,11 +1,10 @@
 import commandLine.CommandReader;
-import entities.Car;
-import entities.CarBrand;
-import entities.Mood;
+import entities.CollectionOfHumanBeings;
 
 public class Main {
     public static void main(String[] args) {
-        CommandReader commandReader = new CommandReader();
+        CollectionOfHumanBeings collection = new CollectionOfHumanBeings("someFile.txt");
+        CommandReader commandReader = new CommandReader(collection);
         commandReader.readCommandsFromConsole();
     }
 }
