@@ -7,7 +7,7 @@ public enum WeaponType {
     RIFLE("Винтовка"),
     MACHINE_GUN("Пулемёт");
 
-    private String name;
+    private final String name;
     WeaponType(String name) {
         this.name = name;
     }

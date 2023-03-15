@@ -32,8 +32,7 @@ public abstract class AbstractCommand {
 
     @Override
     public String toString() {
-        return "Название команды: " + name + ", " + "аргументы: "
-                + ((numberOfArgs == 0) ? "команда не требует аргументов" : argsDescription)
-                + ", описание: " + commandDescription;
+        return "Command name: " + name + ", description:" + commandDescription + ", ars: "
+                + ((numberOfArgs == 0) ? "command doesn't need any args" : argsDescription);
     }
 }

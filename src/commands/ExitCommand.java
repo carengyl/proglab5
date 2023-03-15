@@ -7,14 +7,14 @@ import util.Validators;
 
 public class ExitCommand extends AbstractCommand {
     public ExitCommand() {
-        super("exit", "завершает работу с коллекцией (все несохраненные изменения будут потеряны)");
+        super("exit", "Shut down the program (everything not saved will be lost)");
     }
 
     @Override
     public void executeCommand(String[] commandArgs) {
         try {
-            Validators.ValidateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            System.out.println("Завершение работы.");
+            Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
+            System.out.println("Shutting down...");
             CommandReader.togglePerformanceStatus();
         } catch (InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());

@@ -6,22 +6,23 @@ import util.OutputUtil;
 import util.Validators;
 
 public class ShowCommand extends AbstractCommand{
-    private CollectionOfHumanBeings collection;
+    private final CollectionOfHumanBeings collection;
     public ShowCommand(CollectionOfHumanBeings collection) {
-        super("show", "выводит данные об элементах коллекции");
+        super("show", "Show data about collection and elements");
         this.collection = collection;
     }
     @Override
     public void executeCommand(String[] commandArgs) {
         try {
-            Validators.ValidateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            OutputUtil.printSuccessfulMessage("Коллекция из файла: " + collection.getFileName());
+            Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
+            OutputUtil.printSuccessfulMessage("Collection from file: " + collection.getFileName());
             if (!collection.getHumanBeings().isEmpty()) {
                 for (long key : collection.getHumanBeings().keySet()) {
+                    OutputUtil.printSuccessfulMessageOneStrip("Key: " + key + "; ");
                     OutputUtil.printSuccessfulMessage(collection.getHumanBeings().get(key));
                 }
             } else {
-                OutputUtil.printErrorMessage("Коллекция пуста");
+                OutputUtil.printErrorMessage("Collection is empty");
             }
         } catch (InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());

@@ -1,7 +1,6 @@
 package entities;
 
-import exceptions.IdNotFoundException;
-
+import java.util.Collections;
 import java.util.HashMap;
 import java.util.Objects;
 
@@ -18,11 +17,16 @@ public class CollectionOfHumanBeings {
         return fileName;
     }
 
-    public void addHumanBeing(HumanBeing humanBeing) {
-        humanBeings.put(humanBeing.getId(), humanBeing);
+    public boolean checkForId(long id) {
+        for (long key: humanBeings.keySet()) {
+            if (humanBeings.get(key).getId().equals(id)) {
+                return true;
+            }
+        }
+        return false;
     }
 
-    public void addByKey(HumanBeing humanBeing, long key) {
+    public void addByKey(long key, HumanBeing humanBeing) {
         humanBeings.put(key, humanBeing);
     }
 
@@ -30,17 +34,7 @@ public class CollectionOfHumanBeings {
         return humanBeings;
     }
 
-    public void removeById(long id) throws IdNotFoundException {
-        for (long key: humanBeings.keySet()) {
-            if (Objects.equals(humanBeings.get(key).getId(), id)) {
-                humanBeings.remove(key);
-                return;
-            }
-        }
-        throw new IdNotFoundException();
-    }
-
-    public void updateById(long id, HumanBeing humanBeing) throws IdNotFoundException {
+    public void updateById(long id, HumanBeing humanBeing) {
         for (long key: humanBeings.keySet()) {
             if (Objects.equals(humanBeings.get(key).getId(), id)) {
                 humanBeings.replace(key, humanBeing);
@@ -58,7 +52,16 @@ public class CollectionOfHumanBeings {
         }
     }
 
-    public HashMap<Long, HumanBeing> getCollection() {
-        return humanBeings;
+    public long generateKey() {
+        for (Object key: humanBeings.keySet().stream().sorted().toArray()) {
+            if (!humanBeings.containsKey((long) key + 1)) {
+                return (long) key + 1;
+            }
+        }
+        return Collections.max(humanBeings.keySet()) + 1;
+    }
+
+    public void removeByKey(long key) {
+        humanBeings.remove(key);
     }
 }

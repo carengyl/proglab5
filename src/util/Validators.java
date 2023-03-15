@@ -1,6 +1,7 @@
 package util;
 
 import exceptions.InvalidNumberOfArgsException;
+import exceptions.WrongArgTypeException;
 
 import java.util.NoSuchElementException;
 import java.util.Scanner;
@@ -11,7 +12,7 @@ public final class Validators {
 
     private Validators() {}
 
-    public static void ValidateNumberOfArgs(String[] commandArgs, int numberOfArgs) throws InvalidNumberOfArgsException {
+    public static void validateNumberOfArgs(String[] commandArgs, int numberOfArgs) throws InvalidNumberOfArgsException {
         if (commandArgs.length != numberOfArgs) {
             throw new InvalidNumberOfArgsException(numberOfArgs, commandArgs.length);
         }
@@ -125,5 +126,17 @@ public final class Validators {
                 OutputUtil.printErrorMessage(wrongCaseMessage);
             }
         } while(true);
+    }
+
+    public static <T> T validateArg(Predicate<Object> predicate,
+                                    String wrongCaseMessage,
+                                    Function<String, T> function,
+                                    String arg) throws WrongArgTypeException, IllegalArgumentException {
+        T value = function.apply(arg);
+        if (predicate.test(value)) {
+            return value;
+        } else {
+            throw new WrongArgTypeException(wrongCaseMessage);
+        }
     }
 }

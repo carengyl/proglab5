@@ -6,7 +6,7 @@ public enum Mood {
     RAGE("Яростное"),
     FRENZY("Неистовое");
 
-    private String name;
+    private final String name;
     Mood(String name) {
         this.name = name;
     }

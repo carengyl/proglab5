@@ -16,10 +16,6 @@ public class Car {
         cool = (cost >= 10000000) | (horsePowers > 440) | carBrand.isCool();
     }
 
-    public boolean isCool() {
-        return cool;
-    }
-
     @Override
     public String toString() {
         return ((cool) ? "Крутая ": "Такая себе ") + "машина: "

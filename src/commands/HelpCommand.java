@@ -10,15 +10,15 @@ public class HelpCommand extends AbstractCommand{
     private final HashMap<String, AbstractCommand> AVAILABLE_COMMANDS;
 
     public HelpCommand(HashMap<String, AbstractCommand> AVAILABLE_COMMANDS) {
-        super("help", "выводит список доступных команд");
+        super("help", "Display information about builtin commands");
         this.AVAILABLE_COMMANDS = AVAILABLE_COMMANDS;
     }
 
     @Override
     public void executeCommand(String[] commandArgs) {
         try {
-            Validators.ValidateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            OutputUtil.printSuccessfulMessage("Список доступных команд:");
+            Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
+            OutputUtil.printSuccessfulMessage("Builtin commands:");
             for (AbstractCommand command: AVAILABLE_COMMANDS.values()) {
                 OutputUtil.printSuccessfulMessage(command);
             }

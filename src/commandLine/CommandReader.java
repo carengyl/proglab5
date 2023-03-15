@@ -2,7 +2,7 @@ package commandLine;
 
 import commands.*;
 import entities.CollectionOfHumanBeings;
-import util.CommandManager;
+import util.Invoker;
 import util.OutputUtil;
 
 import java.util.NoSuchElementException;
@@ -15,26 +15,29 @@ public class CommandReader {
         performanceStatus = !performanceStatus;
     }
 
-    private final CommandManager manager;
+    private final Invoker invoker;
 
     public CommandReader(CollectionOfHumanBeings collectionOfHumanBeings) {
-        manager = new CommandManager(
+        invoker = new Invoker(
                 new ExitCommand(),
-                new HelpCommand(CommandManager.AVAILABLE_COMMANDS),
-                new HistoryCommand(CommandManager.commandHistory),
-                new AddCommand(collectionOfHumanBeings),
-                new ShowCommand(collectionOfHumanBeings));
+                new HelpCommand(Invoker.AVAILABLE_COMMANDS),
+                new HistoryCommand(Invoker.commandHistory),
+                new ShowCommand(collectionOfHumanBeings),
+                new InsertCommand(collectionOfHumanBeings),
+                new UpdateCommand(collectionOfHumanBeings),
+                new RemoveByKeyCommand(collectionOfHumanBeings),
+                new ClearCommand(collectionOfHumanBeings));
     }
 
     public void readCommandsFromConsole() {
-        Scanner sc = new Scanner(System.in);
+        Scanner scanner = new Scanner(System.in);
         while (performanceStatus) {
             try {
-                OutputUtil.printSuccessfulMessageOneStrip("Введите команду: ");
-                String line = sc.nextLine().replaceAll("\\s{2,}", " ").strip();
-                manager.performCommand(line);
+                OutputUtil.printSuccessfulMessageOneStrip("> ");
+                String line = scanner.nextLine().replaceAll("\s{2,}", " ").strip();
+                invoker.performCommand(line);
             } catch (NoSuchElementException e) {
-                OutputUtil.printErrorMessage("Введен недопустимый символ");
+                OutputUtil.printErrorMessage("IDK WTF");
                 System.exit(0);
             }
         }
