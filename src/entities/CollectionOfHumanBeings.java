@@ -1,20 +1,27 @@
 package entities;
 
-import java.util.Collections;
+import java.time.LocalDate;
+import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Objects;
 
 public class CollectionOfHumanBeings {
     private final String fileName;
+    private final LocalDate initDate;
     private final HashMap<Long, HumanBeing> humanBeings;
 
     public CollectionOfHumanBeings(String fileName) {
         this.fileName = fileName;
         humanBeings = new HashMap<>();
+        initDate = LocalDate.now();
     }
 
     public String getFileName() {
         return fileName;
+    }
+
+    public String getInitDate() {
+        return initDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"));
     }
 
     public boolean checkForId(long id) {
@@ -50,15 +57,6 @@ public class CollectionOfHumanBeings {
                 System.out.println("Удален элемент с ключом: " + key);
             }
         }
-    }
-
-    public long generateKey() {
-        for (Object key: humanBeings.keySet().stream().sorted().toArray()) {
-            if (!humanBeings.containsKey((long) key + 1)) {
-                return (long) key + 1;
-            }
-        }
-        return Collections.max(humanBeings.keySet()) + 1;
     }
 
     public void removeByKey(long key) {

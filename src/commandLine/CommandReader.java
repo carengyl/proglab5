@@ -2,7 +2,6 @@ package commandLine;
 
 import commands.*;
 import entities.CollectionOfHumanBeings;
-import util.Invoker;
 import util.OutputUtil;
 
 import java.util.NoSuchElementException;
@@ -18,15 +17,18 @@ public class CommandReader {
     private final Invoker invoker;
 
     public CommandReader(CollectionOfHumanBeings collectionOfHumanBeings) {
-        invoker = new Invoker(
-                new ExitCommand(),
-                new HelpCommand(Invoker.AVAILABLE_COMMANDS),
-                new HistoryCommand(Invoker.commandHistory),
-                new ShowCommand(collectionOfHumanBeings),
-                new InsertCommand(collectionOfHumanBeings),
-                new UpdateCommand(collectionOfHumanBeings),
-                new RemoveByKeyCommand(collectionOfHumanBeings),
-                new ClearCommand(collectionOfHumanBeings));
+        invoker = new Invoker();
+        invoker.addCommand(new ClearCommand(collectionOfHumanBeings));
+        invoker.addCommand(new ExitCommand());
+        invoker.addCommand(new HelpCommand(invoker.getAvailableCommands()));
+        invoker.addCommand(new HistoryCommand(invoker.getCommandHistory()));
+        invoker.addCommand(new InsertCommand(collectionOfHumanBeings));
+        invoker.addCommand(new RemoveByKeyCommand(collectionOfHumanBeings));
+        invoker.addCommand(new ShowCommand(collectionOfHumanBeings));
+        invoker.addCommand(new UpdateCommand(collectionOfHumanBeings));
+        invoker.addCommand(new InfoCommand(collectionOfHumanBeings));
+        invoker.addCommand(new FilterByCarCommand(collectionOfHumanBeings));
+        invoker.addCommand(new CountGreaterThanMoodCommand(collectionOfHumanBeings));
     }
 
     public void readCommandsFromConsole() {
@@ -37,8 +39,8 @@ public class CommandReader {
                 String line = scanner.nextLine().replaceAll("\s{2,}", " ").strip();
                 invoker.performCommand(line);
             } catch (NoSuchElementException e) {
-                OutputUtil.printErrorMessage("IDK WTF");
-                System.exit(0);
+                OutputUtil.printErrorMessage("Unexpected error");
+                // TODO: 16.03.2023 no system exit
             }
         }
     }

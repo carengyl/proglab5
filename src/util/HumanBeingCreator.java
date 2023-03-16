@@ -17,7 +17,7 @@ public class HumanBeingCreator {
     }
 
     private void setName() {
-        String name = Validators.validateStringInput("Введите имя:", false, scanner);
+        String name = Validators.validateStringInput("Enter human's name", false, scanner);
         createdHumanBeing.setName(name);
     }
 
@@ -28,9 +28,9 @@ public class HumanBeingCreator {
 
     private int setY() {
         return Validators.validateInput(arg -> ((int) arg) > Coordinates.getMIN_Y(),
-                "Введите целую координату Y, она должна быть больше " + Coordinates.getMIN_Y() + ":",
-                "Ошибка обработки, ожидалось целое число, повторите ввод:",
-                "Координата Y должна быть больше " + Coordinates.getMIN_Y() + ", повторите ввод:",
+                "Enter integer (long) Y coordinate, it should be greater than " + Coordinates.getMIN_Y(),
+                "Expected long type number, try again:",
+                "Y coordinate should be greater than " + Coordinates.getMIN_Y() + ", try again:",
                 Integer::parseInt,
                 false,
                 scanner);
@@ -38,29 +38,29 @@ public class HumanBeingCreator {
 
     private int setX() {
         return Validators.validateInput(arg -> true,
-                "Введите целую координату X:",
-                "Ошибка обработки, ожидалось целое число, повторите ввод:",
-                "Непредвиденная ошибка",
+                "Enter integer (long) X",
+                "Expected long type number, try again:",
+                "",
                 Integer::parseInt,
                 false,
                 scanner);
     }
 
     private void setRealHero() {
-        boolean realHero = Validators.validateBooleanInput("Он/она герой", scanner);
+        boolean realHero = Validators.validateBooleanInput("Is he/she a real hero", scanner);
         createdHumanBeing.setRealHero(realHero);
     }
 
     private void setHasToothpick() {
-        boolean hasToothpick = Validators.validateBooleanInput("С зубочисткой", scanner);
+        boolean hasToothpick = Validators.validateBooleanInput("Has a toothpick", scanner);
         createdHumanBeing.setHasToothpick(hasToothpick);
     }
 
     private void setImpactSpeed() {
         Double impactSpeed = Validators.validateInput(arg -> ((Double) arg) > HumanBeing.getMinImpactSpeed(),
-                "Введите вещественную скорость удара в м/с, скорость удара должна быть больше " + HumanBeing.getMinImpactSpeed() + " (для пропуска нажмите ENTER):",
-                "Ошибка обработки, ожидалось вещественное число, повторите ввод:",
-                "Скорость удара должна быть больше " + HumanBeing.getMinImpactSpeed() + " повторите ввод:",
+                "Enter real (double) impact speed m/s, it should be greater than " + HumanBeing.getMinImpactSpeed(),
+                "Expected double type, try again:",
+                "Impact speed should be greater than " + HumanBeing.getMinImpactSpeed() + ", try again:",
                 Double::parseDouble,
                 true,
                 scanner);
@@ -69,9 +69,9 @@ public class HumanBeingCreator {
 
     private void setMinutesOfWaitingSpeed() {
         Double minutesOfWaiting = Validators.validateInput(arg -> true,
-                "Введите вещественную время ожидания (для пропуска нажмите ENTER):",
-                "Ошибка обработки, ожидалось вещественное число, повторите ввод:",
-                "Непредвиденная ошибка, повторите ввод:" + HumanBeing.getMinImpactSpeed(),
+                "Enter real (double) minutes of waiting",
+                "Expected double type, try again:",
+                "",
                 Double::parseDouble,
                 true,
                 scanner);
@@ -79,7 +79,7 @@ public class HumanBeingCreator {
     }
 
     private void setWeaponType() {
-        int weaponTypeNumber = Validators.validateEnumInput("Выберите оружие:\n" + WeaponType.show(),
+        int weaponTypeNumber = Validators.validateEnumInput("Pick a weapon:\n" + WeaponType.show(),
                 WeaponType.values().length,
                 false,
                 scanner);
@@ -87,7 +87,7 @@ public class HumanBeingCreator {
     }
 
     private void setMood() {
-        int moodNumber = Validators.validateEnumInput("Выберите настроение:\n" + Mood.show(),
+        int moodNumber = Validators.validateEnumInput("Pick a mood:\n" + Mood.show(),
                 Mood.values().length,
                 false,
                 scanner);
@@ -95,7 +95,7 @@ public class HumanBeingCreator {
     }
 
     private void setCar() {
-        String carName = Validators.validateStringInput("Введите название машины (для пропуска создания машины нажмите ENTER):",
+        String carName = Validators.validateStringInput("Enter car's name, if skipped, whole car creation will be skipped",
                 true,
                 scanner);
         if (carName == null) {
@@ -110,9 +110,9 @@ public class HumanBeingCreator {
 
     private int setCarCost() {
         return Validators.validateInput(arg -> ((int) arg) > 0,
-                "Введите стоимость машины в тугриках (целая, больше нуля):",
-                "Ошибка обработки, ожидалось целое число, повторите ввод:",
-                "Стоимость должна быть больше нуля, повторите ввод:",
+                "Enter car's cost in tugriks (positive integer)",
+                "Expected integer type, try again:",
+                "Car's cost must be positive number, try again:",
                 Integer::parseInt,
                 false,
                 scanner);
@@ -120,9 +120,9 @@ public class HumanBeingCreator {
 
     private int setCarHorsePowers() {
         return Validators.validateInput(arg -> ((int) arg) > 0,
-                "Введите мощность машины в л.с. (целая, больше нуля):",
-                "Ошибка обработки, ожидалось целое число, повторите ввод:",
-                "Мощность должна быть больше нуля, иначе это не машина, а лада калина, повторите ввод:",
+                "Enter car's engine power in h.p. (positive integer):",
+                "Expected integer type, try again:",
+                "Engine power must be positive number, try again:",
                 Integer::parseInt,
                 false,
                 scanner);
@@ -130,7 +130,7 @@ public class HumanBeingCreator {
 
     private CarBrand setCarBrand() {
         return CarBrand.values()[
-                Validators.validateEnumInput("Выберите марку машины:\n" + CarBrand.show(),
+                Validators.validateEnumInput("Pick a car brand:\n" + CarBrand.show(),
                 CarBrand.values().length,
                 false,
                 scanner)

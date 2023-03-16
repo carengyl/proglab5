@@ -1,19 +1,18 @@
 package entities;
 
 public enum Mood {
-    LONGING("Жаждущее"),
-    CALM("Спокойное"),
-    RAGE("Яростное"),
-    FRENZY("Неистовое");
+    LONGING(),
+    CALM(),
+    RAGE(),
+    FRENZY();
 
-    private final String name;
-    Mood(String name) {
-        this.name = name;
-    }
-
-    @Override
-    public String toString() {
-        return name;
+    public static Mood getMoodByNumber(int i) {
+        for (Mood mood: Mood.values()) {
+            if (mood.ordinal() == i-1) {
+                return mood;
+            }
+        }
+        return null;
     }
 
     public static String show() {
@@ -21,7 +20,7 @@ public enum Mood {
         int k = 0;
         for (Mood mood: Mood.values()) {
             k++;
-            sb.append(k).append(". ").append(mood.name).append('\n');
+            sb.append(k).append(". ").append(mood.toString()).append('\n');
         }
         sb.delete(sb.length()-1,sb.length());
         return sb.toString();

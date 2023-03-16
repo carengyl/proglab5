@@ -2,7 +2,10 @@ package commands;
 
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
+import util.OutputUtil;
 import util.Validators;
+
+import java.util.Scanner;
 
 public class ClearCommand extends AbstractCommand {
     private final CollectionOfHumanBeings collection;
@@ -15,7 +18,12 @@ public class ClearCommand extends AbstractCommand {
     public void executeCommand(String[] commandArgs) {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            collection.getHumanBeings().clear();
+            boolean userInput = Validators.validateBooleanInput("You're going to delete all collection. Are you sure",
+                    new Scanner(System.in));
+            if (userInput) {
+                collection.getHumanBeings().clear();
+                OutputUtil.printSuccessfulMessage("Collection has been cleared.");
+            }
         } catch (InvalidNumberOfArgsException e) {
             throw new RuntimeException(e);
         }

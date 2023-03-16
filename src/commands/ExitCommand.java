@@ -5,6 +5,8 @@ import exceptions.InvalidNumberOfArgsException;
 import util.OutputUtil;
 import util.Validators;
 
+import java.util.Scanner;
+
 public class ExitCommand extends AbstractCommand {
     public ExitCommand() {
         super("exit", "Shut down the program (everything not saved will be lost)");
@@ -14,8 +16,12 @@ public class ExitCommand extends AbstractCommand {
     public void executeCommand(String[] commandArgs) {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            System.out.println("Shutting down...");
-            CommandReader.togglePerformanceStatus();
+            boolean userInput = Validators.validateBooleanInput("Shut down",
+                    new Scanner(System.in));
+            if (userInput) {
+                OutputUtil.printSuccessfulMessage("Shutting down...");
+                CommandReader.togglePerformanceStatus();
+            }
         } catch (InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }

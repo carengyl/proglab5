@@ -19,7 +19,7 @@ public final class Validators {
     }
 
     public static String validateStringInput(String inputMessage, boolean nullable, Scanner scanner) {
-        OutputUtil.printSuccessfulMessage(inputMessage);
+        OutputUtil.printSuccessfulMessage(inputMessage + ((nullable) ? " (press Enter to skip):": ":"));
         String input;
         do {
             try {
@@ -27,13 +27,12 @@ public final class Validators {
                 if (input.equals("") && nullable) {
                     return null;
                 } else if (input.equals("")) {
-                    OutputUtil.printErrorMessage("Данное поле не может быть пустым, повторите ввод");
+                    OutputUtil.printErrorMessage("This variable can't be null, try again:");
                     continue;
                 }
             } catch (NoSuchElementException e) {
                     OutputUtil.printErrorMessage(e.getMessage());
-                    System.exit(1);
-                    return null;
+                    continue;
             }
             return input;
         } while (true);
@@ -46,25 +45,25 @@ public final class Validators {
             try {
                 input = scanner.nextLine();
                 if (input.equals("")) {
-                    OutputUtil.printErrorMessage("Данное поле не может быть пустым, повторите ввод");
+                    OutputUtil.printErrorMessage("This variable can't be null, try again:");
                     continue;
                 }
             } catch (NoSuchElementException e) {
                 OutputUtil.printErrorMessage(e.getMessage());
-                System.exit(1);
-                return null;
+                continue;
             }
             input = input.strip();
             switch (input.toLowerCase()) {
                 case "y": return true;
                 case "n": return false;
-                default: OutputUtil.printErrorMessage("Введите y/n");
+                default: OutputUtil.printErrorMessage("Type 'y' or 'n', where 'y' is for 'yes, 'n' is for 'no'");
             }
         } while (true);
     }
 
     public static Integer validateEnumInput(String inputMessage, int enumLength, boolean nullable, Scanner scanner) {
         OutputUtil.printSuccessfulMessage(inputMessage);
+        OutputUtil.printSuccessfulMessage("Pick a number" + ((nullable) ? " or press Enter to skip: ": ": "));
         String input;
         int value;
         do {
@@ -73,21 +72,19 @@ public final class Validators {
                 if (input.equals("") && nullable) {
                     return null;
                 } else if (input.equals("")) {
-                    OutputUtil.printErrorMessage("Данное поле не может быть пустым, повторите ввод");
+                    OutputUtil.printErrorMessage("This variable can't be null, try again:");
                     continue;
                 }
                 value = Integer.parseInt(input);
                 if (value > 0 && value <= enumLength) {
                     return value - 1;
                 } else {
-                    OutputUtil.printErrorMessage("Номер элемента не может быть меньше 0 или больше " + enumLength);
+                    OutputUtil.printErrorMessage("Pick an Enum element number, it can't be less than 0 and greater than " + enumLength);
                 }
             } catch (IllegalArgumentException e) {
-                OutputUtil.printErrorMessage("Введите номер элемента:");
+                OutputUtil.printErrorMessage("Pick a number: ");
             } catch (NoSuchElementException e) {
                 OutputUtil.printErrorMessage(e.getMessage());
-                System.exit(1);
-                return null;
             }
         } while (true);
     }
@@ -99,7 +96,7 @@ public final class Validators {
                                       Function<String, T> function,
                                       Boolean nullable,
                                       Scanner scanner) {
-        OutputUtil.printSuccessfulMessage(inputMessage);
+        OutputUtil.printSuccessfulMessage(inputMessage + ((nullable) ? " (press Enter to skip):": ":"));
         String input;
         T value;
         do {
@@ -108,7 +105,7 @@ public final class Validators {
                 if (input.equals("") && nullable) {
                     return null;
                 } else if (input.equals("")) {
-                    OutputUtil.printErrorMessage("Данное поле не может быть пустым, повторите ввод");
+                    OutputUtil.printErrorMessage("This variable can't be hull, try again:");
                     continue;
                 }
                 value = function.apply(input);
@@ -117,8 +114,7 @@ public final class Validators {
                 continue;
             } catch (NoSuchElementException e) {
                 OutputUtil.printErrorMessage(e.getMessage());
-                System.exit(1);
-                return null;
+                continue;
             }
             if (predicate.test(value)) {
                 return value;

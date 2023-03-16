@@ -72,18 +72,26 @@ public class HumanBeing {
         return id;
     }
 
+    public Car getCar() {
+        return car;
+    }
+
+    public Mood getMood() {
+        return mood;
+    }
+
     @Override
     public String toString() {
         return "ID: " + this.id
-                + "; Имя: " + this.name
-                + "; Координаты: " + this.coordinates
-                + "; Создан: " + creationDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
-                + "; " + ((this.realHero) ? "Герой" : "Злодей")
-                + ((this.hasToothpick) ? " c зубочисткой во рту" : "")
-                + "; Скорость удара: " + ((this.impactSpeed == null) ? "неизвестна" : this.impactSpeed + " м/с")
-                + "; Время ожидания: " + ((this.minutesOfWaiting == null) ? "неизвестно" : this.minutesOfWaiting + " минут")
-                + "; Оружие: " + this.weaponType
-                + "; Настроение: " + this.mood
-                + "; " + ((this.car == null) ? "Без машины": "Транспорт: " + this.car);
+                + "; Name: " + this.name
+                + "; Coordinates: " + this.coordinates
+                + "; Created: " + creationDate.format(DateTimeFormatter.ofPattern("dd-MM-yyyy"))
+                + "; " + ((this.realHero) ? "Hero" : "Villain")
+                + ((this.hasToothpick) ? " with toothpick" : "")
+                + "; Impact speed: " + ((this.impactSpeed == null) ? "-" : this.impactSpeed + " m/s")
+                + "; Minutes of waiting: " + ((this.minutesOfWaiting == null) ? "-" : this.minutesOfWaiting + " min")
+                + "; Weapon: " + this.weaponType
+                + "; Mood: " + this.mood
+                + "; " + ((this.car == null) ? "Has no car": "Transport: " + this.car);
     }
 }

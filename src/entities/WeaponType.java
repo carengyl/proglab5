@@ -1,28 +1,20 @@
 package entities;
 
 public enum WeaponType {
-    AXE("Топор"),
-    PISTOL("Пистолет"),
-    SHOTGUN("Дробовик"),
-    RIFLE("Винтовка"),
-    MACHINE_GUN("Пулемёт");
+    AXE(),
+    PISTOL(),
+    SHOTGUN(),
+    RIFLE(),
+    MACHINE_GUN();
 
-    private final String name;
-    WeaponType(String name) {
-        this.name = name;
-    }
 
-    @Override
-    public String toString() {
-        return name;
-    }
-
+    // TODO: 16.03.2023 fix show to be with ordinal
     public static String show() {
         StringBuilder sb = new StringBuilder();
-        int k = 0;
+        int counter = 0;
         for (WeaponType weaponType: WeaponType.values()) {
-            k++;
-            sb.append(k).append(". ").append(weaponType.name).append('\n');
+            counter++;
+            sb.append(counter).append(". ").append(weaponType.toString()).append('\n');
         }
         sb.delete(sb.length()-1,sb.length());
         return sb.toString();

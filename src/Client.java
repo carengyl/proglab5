@@ -1,10 +1,9 @@
 import commandLine.CommandReader;
 import entities.CollectionOfHumanBeings;
 
-public class Main {
+public class Client {
     public static void main(String[] args) {
-        //collection = xml.parse("someFile.xml")
-        CollectionOfHumanBeings collection = new CollectionOfHumanBeings("someFile.xml");
+        CollectionOfHumanBeings collection = new CollectionOfHumanBeings(System.getenv("XML_FILE"));
         CommandReader commandReader = new CommandReader(collection);
         commandReader.readCommandsFromConsole();
     }
