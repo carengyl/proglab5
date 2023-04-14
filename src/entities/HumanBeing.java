@@ -197,6 +197,13 @@ public class HumanBeing {
     }
 
     /**
+     * @return minutes of waiting
+     */
+    public Double getMinutesOfWaiting() {
+        return minutesOfWaiting;
+    }
+
+    /**
      * Sets weapon type
      *
      * @param weaponType parsed weapon type
@@ -237,6 +244,15 @@ public class HumanBeing {
         return car;
     }
 
+    /**
+     * Compares this HumanBeing to another given by Coordinates
+     *
+     * @param humanBeing given HumanBeing
+     * @return 1 if greater, -1 if less, 0 if equal
+     */
+    public int compareTo(HumanBeing humanBeing) {
+        return Coordinates.compare(this.coordinates, humanBeing.getCoordinates());
+    }
 
     /**
      * Overrides {@code toString} of {@code Object}.

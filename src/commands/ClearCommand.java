@@ -25,7 +25,7 @@ public class ClearCommand extends AbstractCommand {
                 OutputUtil.printSuccessfulMessage("Collection has been cleared.");
             }
         } catch (InvalidNumberOfArgsException e) {
-            throw new RuntimeException(e);
+            OutputUtil.printErrorMessage(e.getMessage());
         }
     }
 }
