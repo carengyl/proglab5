@@ -1,16 +1,55 @@
 package util;
 
+import entities.Car;
+import entities.CollectionOfHumanBeings;
+import entities.Coordinates;
+import entities.HumanBeing;
 import exceptions.InvalidNumberOfArgsException;
-import exceptions.WrongArgTypeException;
+import exceptions.ValidationException;
 
+import java.util.HashSet;
 import java.util.NoSuchElementException;
 import java.util.Scanner;
+import java.util.Set;
 import java.util.function.Function;
 import java.util.function.Predicate;
+import java.util.logging.Level;
+
+import jakarta.validation.ConstraintViolation;
+import jakarta.validation.Validation;
+import jakarta.validation.ValidatorFactory;
+import jakarta.validation.Validator;
 
 public final class Validators {
-
     private Validators() {}
+
+    public static void validateClass(CollectionOfHumanBeings collection) {
+        java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
+        ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
+        Validator validator = validatorFactory.getValidator();
+        for (long key: collection.getHumanBeings().keySet()) {
+            HumanBeing humanBeing = collection.getHumanBeings().get(key);
+            Set<ConstraintViolation<Coordinates>> validatedCoordinates = validator.validate(humanBeing.getCoordinates());
+            Set<ConstraintViolation<Car>> validatedCar = new HashSet<>();
+
+            if (humanBeing.getCar() != null) {
+                validatedCar = validator.validate(humanBeing.getCar());
+            }
+            Set<ConstraintViolation<HumanBeing>> validatedHumanBeing = validator.validate(humanBeing);
+            if (!validatedHumanBeing.isEmpty() || !validatedCoordinates.isEmpty() || !validatedCar.isEmpty()) {
+                OutputUtil.printErrorMessage("XML file is corrupted.");
+                validatedHumanBeing.stream().map(ConstraintViolation::getMessage)
+                        .forEach(System.out::println);
+                validatedCoordinates.stream().map(ConstraintViolation::getMessage)
+                        .forEach(System.out::println);
+                validatedCar.stream().map(ConstraintViolation::getMessage)
+                        .forEach(System.out::println);
+                System.exit(1);
+            }
+        }
+
+        OutputUtil.printSuccessfulMessage("Successfully loaded collection from file. Waiting for commands.");
+    }
 
     public static void validateNumberOfArgs(String[] commandArgs, int numberOfArgs) throws InvalidNumberOfArgsException {
         if (commandArgs.length != numberOfArgs) {
@@ -112,9 +151,6 @@ public final class Validators {
             } catch (IllegalArgumentException e) {
                 OutputUtil.printErrorMessage(errorMessage);
                 continue;
-            } catch (NoSuchElementException e) {
-                OutputUtil.printErrorMessage(e.getMessage());
-                continue;
             }
             if (predicate.test(value)) {
                 return value;
@@ -127,12 +163,12 @@ public final class Validators {
     public static <T> T validateArg(Predicate<Object> predicate,
                                     String wrongCaseMessage,
                                     Function<String, T> function,
-                                    String arg) throws WrongArgTypeException, IllegalArgumentException {
+                                    String arg) throws ValidationException, IllegalArgumentException {
         T value = function.apply(arg);
         if (predicate.test(value)) {
             return value;
         } else {
-            throw new WrongArgTypeException(wrongCaseMessage);
+            throw new ValidationException(wrongCaseMessage);
         }
     }
 }

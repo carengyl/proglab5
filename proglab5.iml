@@ -7,5 +7,10 @@
     </content>
     <orderEntry type="inheritedJdk" />
     <orderEntry type="sourceFolder" forTests="false" />
+    <orderEntry type="library" name="Java EE 6-Java EE 6" level="project" />
+    <orderEntry type="library" name="thoughtworks.xstream" level="application" />
+    <orderEntry type="library" name="jakarta.validation.api" level="project" />
+    <orderEntry type="library" name="hibernate.validator" level="project" />
+    <orderEntry type="library" name="glassfish.expressly" level="project" />
   </component>
 </module>

@@ -16,11 +16,11 @@ public class ExitCommand extends AbstractCommand {
     public void executeCommand(String[] commandArgs) {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            boolean userInput = Validators.validateBooleanInput("Shut down",
+            boolean userInput = Validators.validateBooleanInput("Shut down (everything not saved will be lost)",
                     new Scanner(System.in));
             if (userInput) {
                 OutputUtil.printSuccessfulMessage("Shutting down...");
-                CommandReader.togglePerformanceStatus();
+                CommandReader.toggleProgram();
             }
         } catch (InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());

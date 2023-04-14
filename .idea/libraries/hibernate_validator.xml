@@ -1,0 +1,22 @@
+<component name="libraryTable">
+  <library name="hibernate.validator" type="repository">
+    <properties maven-id="org.hibernate:hibernate-validator:7.0.4.Final" />
+    <CLASSES>
+      <root url="jar://$PROJECT_DIR$/lib/hibernate-validator-7.0.4.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jakarta.validation-api-3.0.0.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jboss-logging-3.4.1.Final.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/classmate-1.5.1.jar!/" />
+    </CLASSES>
+    <JAVADOC>
+      <root url="jar://$PROJECT_DIR$/lib/jakarta.validation-api-3.0.0-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jboss-logging-3.4.1.Final-javadoc.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/classmate-1.5.1-javadoc.jar!/" />
+    </JAVADOC>
+    <SOURCES>
+      <root url="jar://$PROJECT_DIR$/lib/hibernate-validator-7.0.4.Final-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jakarta.validation-api-3.0.0-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/jboss-logging-3.4.1.Final-sources.jar!/" />
+      <root url="jar://$PROJECT_DIR$/lib/classmate-1.5.1-sources.jar!/" />
+    </SOURCES>
+  </library>
+</component>

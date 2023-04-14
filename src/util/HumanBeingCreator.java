@@ -8,12 +8,12 @@ public class HumanBeingCreator {
     private final HumanBeing createdHumanBeing;
     private final Scanner scanner = new Scanner(System.in);
 
-    public HumanBeingCreator() {
-        createdHumanBeing = new HumanBeing();
-    }
-
     public HumanBeingCreator(long id) {
         createdHumanBeing = new HumanBeing(id);
+    }
+
+    public HumanBeingCreator() {
+        createdHumanBeing = new HumanBeing();
     }
 
     private void setName() {
@@ -26,7 +26,7 @@ public class HumanBeingCreator {
         createdHumanBeing.setCoordinates(coordinates);
     }
 
-    private int setY() {
+    private Integer setY() {
         return Validators.validateInput(arg -> ((int) arg) > Coordinates.getMIN_Y(),
                 "Enter integer (long) Y coordinate, it should be greater than " + Coordinates.getMIN_Y(),
                 "Expected long type number, try again:",
@@ -36,7 +36,7 @@ public class HumanBeingCreator {
                 scanner);
     }
 
-    private int setX() {
+    private Integer setX() throws NullPointerException {
         return Validators.validateInput(arg -> true,
                 "Enter integer (long) X",
                 "Expected long type number, try again:",
@@ -79,7 +79,7 @@ public class HumanBeingCreator {
     }
 
     private void setWeaponType() {
-        int weaponTypeNumber = Validators.validateEnumInput("Pick a weapon:\n" + WeaponType.show(),
+        Integer weaponTypeNumber = Validators.validateEnumInput("Pick a weapon:\n" + WeaponType.show(),
                 WeaponType.values().length,
                 false,
                 scanner);
@@ -87,7 +87,7 @@ public class HumanBeingCreator {
     }
 
     private void setMood() {
-        int moodNumber = Validators.validateEnumInput("Pick a mood:\n" + Mood.show(),
+        Integer moodNumber = Validators.validateEnumInput("Pick a mood:\n" + Mood.show(),
                 Mood.values().length,
                 false,
                 scanner);
@@ -108,7 +108,7 @@ public class HumanBeingCreator {
         }
     }
 
-    private int setCarCost() {
+    private Integer setCarCost() {
         return Validators.validateInput(arg -> ((int) arg) > 0,
                 "Enter car's cost in tugriks (positive integer)",
                 "Expected integer type, try again:",
@@ -118,7 +118,7 @@ public class HumanBeingCreator {
                 scanner);
     }
 
-    private int setCarHorsePowers() {
+    private Integer setCarHorsePowers() {
         return Validators.validateInput(arg -> ((int) arg) > 0,
                 "Enter car's engine power in h.p. (positive integer):",
                 "Expected integer type, try again:",
@@ -129,12 +129,11 @@ public class HumanBeingCreator {
     }
 
     private CarBrand setCarBrand() {
-        return CarBrand.values()[
-                Validators.validateEnumInput("Pick a car brand:\n" + CarBrand.show(),
+        Integer carBrandNumber = Validators.validateEnumInput("Pick a car brand:\n" + CarBrand.show(),
                 CarBrand.values().length,
                 false,
-                scanner)
-                ];
+                scanner);
+        return CarBrand.values()[carBrandNumber];
     }
 
     public void setVariables() {

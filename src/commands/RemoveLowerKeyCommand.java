@@ -3,15 +3,16 @@ package commands;
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
 import exceptions.ValidationException;
-import util.HumanBeingCreator;
 import util.OutputUtil;
 import util.Validators;
 
-public class UpdateCommand extends AbstractCommand {
+public class RemoveLowerKeyCommand extends AbstractCommand {
+
     private final CollectionOfHumanBeings collection;
 
-    public UpdateCommand(CollectionOfHumanBeings collection) {
-        super("update", 1, "Update element by @id", "@id - (long) id of collection element");
+    // TODO: 13.04.2023 class argument
+    public RemoveLowerKeyCommand(CollectionOfHumanBeings collection) {
+        super("remove_lower_key", 1, "Remove elements from collection, which key is lower than @key", "@key - (long) unique key of element in collection");
         this.collection = collection;
     }
 
@@ -19,13 +20,11 @@ public class UpdateCommand extends AbstractCommand {
     public void executeCommand(String[] commandArgs) {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            long id = Validators.validateArg(arg -> (collection.checkForId((long) arg)),
-                    "Key isn't unique",
+            long greaterKey = Validators.validateArg(arg -> true,
+                    "Expected long type",
                     Long::parseLong,
                     commandArgs[0]);
-            HumanBeingCreator creator = new HumanBeingCreator(id);
-            creator.setVariables();
-            collection.updateById(id, creator.getCreatedHumanBeing());
+            collection.removeLowerKey(greaterKey);
         } catch (InvalidNumberOfArgsException | ValidationException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }

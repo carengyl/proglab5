@@ -3,7 +3,7 @@ package commands;
 import entities.CollectionOfHumanBeings;
 import entities.Mood;
 import exceptions.InvalidNumberOfArgsException;
-import exceptions.WrongArgTypeException;
+import exceptions.ValidationException;
 import util.OutputUtil;
 import util.Validators;
 
@@ -33,7 +33,7 @@ public class CountGreaterThanMoodCommand extends AbstractCommand {
                 }
             }
             OutputUtil.printSuccessfulMessage("People with Mood greater than " + mood + ":" + greaterMoods);
-        } catch (InvalidNumberOfArgsException | WrongArgTypeException e) {
+        } catch (InvalidNumberOfArgsException | ValidationException e) {
             OutputUtil.printSuccessfulMessage(e.getMessage());
         }
     }

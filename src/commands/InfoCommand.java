@@ -7,7 +7,7 @@ import util.Validators;
 
 public class InfoCommand extends AbstractCommand {
 
-    private CollectionOfHumanBeings collection;
+    private final CollectionOfHumanBeings collection;
 
     public InfoCommand(CollectionOfHumanBeings collection) {
         super("info", "Show info about collection");

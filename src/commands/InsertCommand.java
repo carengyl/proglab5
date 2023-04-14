@@ -2,7 +2,7 @@ package commands;
 
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
-import exceptions.WrongArgTypeException;
+import exceptions.ValidationException;
 import util.HumanBeingCreator;
 import util.OutputUtil;
 import util.Validators;
@@ -26,7 +26,7 @@ public class InsertCommand extends AbstractCommand {
             HumanBeingCreator creator = new HumanBeingCreator();
             creator.setVariables();
             collection.addByKey(key, creator.getCreatedHumanBeing());
-        } catch (InvalidNumberOfArgsException | WrongArgTypeException | IllegalArgumentException e) {
+        } catch (InvalidNumberOfArgsException | ValidationException | IllegalArgumentException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }
     }

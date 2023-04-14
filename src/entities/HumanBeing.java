@@ -1,85 +1,248 @@
 package entities;
 
+import com.thoughtworks.xstream.annotations.XStreamAlias;
+
+import jakarta.validation.constraints.*;
 import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 
+/**
+ * Data structure for HumanBeing.
+ *
+ * @author carengyl
+ */
+@XStreamAlias("humanBeing")
 public class HumanBeing {
+
+    /**
+     * Current ID field for ID generation
+     */
     private static Long currentId = 1L;
+
+    /**
+     * Sets current ID to greater than maximal in collection
+     *
+     * @param maxId max ID in collection
+     */
+    public static void setCurrentId(long maxId) {
+        currentId = maxId + 1;
+    }
+    /**
+     * ID field
+     */
+    @NotNull
+    @Positive
     private final Long id; //Поле не может быть null, Значение поля должно быть больше 0, Значение этого поля должно быть уникальным, Значение этого поля должно генерироваться автоматически
+    /**
+     * Name field
+     */
+    @NotNull
     private String name; //Поле не может быть null, Строка не может быть пустой
+    /**
+     * Coordinates field
+     */
+    @NotNull
     private Coordinates coordinates; //Поле не может быть null
-    private final java.time.LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
-    private Boolean realHero; //Поле не может быть null
+    /**
+     * Creation date field
+     */
+    @NotNull
+    @PastOrPresent
+    private java.time.LocalDate creationDate; //Поле не может быть null, Значение этого поля должно генерироваться автоматически
+    /**
+     * Real hero field
+     */
+    @NotNull
+    private boolean realHero; //Поле не может быть null
+    /**
+     * Has toothpick field
+     */
     private boolean hasToothpick;
+    /**
+     * Impact speed field
+     */
     private Double impactSpeed; //Значение поля должно быть больше -611, Поле может быть null
-    private static final Double MIN_IMPACT_SPEED = (double) -611;
+    /**
+     * Minimal Impact speed constant
+     */
+    private static final double MIN_IMPACT_SPEED = -611;
+
+    /**
+     * Checks that {@code impactSpeed} is greater than {@code MIN_IMPACT_SPEED}
+     *
+     * @return true if that
+     */
+    @AssertTrue(message = "impactSpeed must be greater than -611")
+    private boolean checkImpactSpeed() {
+        if (impactSpeed != null) {
+            return impactSpeed > MIN_IMPACT_SPEED;
+        } else {
+            return true;
+        }
+    }
+    /**
+     * Minutes of waiting field
+     */
     private Double minutesOfWaiting; //Поле может быть null
+    /**
+     * Weapon type field
+     */
+    @NotNull
     private WeaponType weaponType; //Поле не может быть null
+    /**
+     * Mood field
+     */
+    @NotNull
     private Mood mood; //Поле не может быть null
+    /**
+     * Car field
+     */
     private Car car; //Поле может быть null
 
-    public HumanBeing() {
-        creationDate = LocalDate.now();
-        id = currentId++;
-    }
-
+    /**
+     * Constructs new instance with known id.
+     * Creates existing Human being from file with existing id.
+     *
+     * @param id id of Human being from file.
+     */
     public HumanBeing(long id) {
-        creationDate = LocalDate.now();
+        checkImpactSpeed();
         this.id = id;
     }
 
-    public static Double getMinImpactSpeed() {
-        return MIN_IMPACT_SPEED;
+    /**
+     * Constructs new instance of Human being.
+     * Uses currentId field to generate new id, also generates creationDate field.
+     */
+    public HumanBeing() {
+        checkImpactSpeed();
+        creationDate = LocalDate.now();
+        this.id = currentId++;
     }
 
-    public void setName(String name) {
-        this.name = name;
-    }
-
-    public void setCoordinates(Coordinates coordinates) {
-        this.coordinates = coordinates;
-    }
-
-    public void setRealHero(Boolean realHero) {
-        this.realHero = realHero;
-    }
-
-    public void setHasToothpick(boolean hasToothpick) {
-        this.hasToothpick = hasToothpick;
-    }
-
-    public void setImpactSpeed(Double impactSpeed) {
-        this.impactSpeed = impactSpeed;
-    }
-
-    public void setMinutesOfWaiting(Double minutesOfWaiting) {
-        this.minutesOfWaiting = minutesOfWaiting;
-    }
-
-    public void setWeaponType(WeaponType weaponType) {
-        this.weaponType = weaponType;
-    }
-
-    public void setMood(Mood mood) {
-        this.mood = mood;
-    }
-
-    public void setCar(Car car) {
-        this.car = car;
-    }
-
+    /**
+     * @return id field
+     */
     public Long getId() {
         return id;
     }
 
-    public Car getCar() {
-        return car;
+
+    /**
+     * @return min impact speed
+     */
+    public static Double getMinImpactSpeed() {
+        return MIN_IMPACT_SPEED;
     }
 
+    /**
+     * Sets name field
+     *
+     * @param name parsed name
+     */
+    public void setName(String name) {
+        this.name = name;
+    }
+
+    /**
+     * Sets coordinates
+     *
+     * @param coordinates parsed coordinates
+     */
+    public void setCoordinates(Coordinates coordinates) {
+        this.coordinates = coordinates;
+    }
+
+    /**
+     * @return Coordinates
+     */
+    public Coordinates getCoordinates() {
+        return coordinates;
+    }
+
+    /**
+     * Sets real hero
+     *
+     * @param realHero parsed real hero
+     */
+    public void setRealHero(Boolean realHero) {
+        this.realHero = realHero;
+    }
+
+    /**
+     * Sets has toothpick
+     *
+     * @param hasToothpick parsed has toothpick
+     */
+    public void setHasToothpick(boolean hasToothpick) {
+        this.hasToothpick = hasToothpick;
+    }
+
+    /**
+     * Sets impact speed
+     *
+     * @param impactSpeed parsed impact speed
+     */
+    public void setImpactSpeed(Double impactSpeed) {
+        this.impactSpeed = impactSpeed;
+    }
+
+    /**
+     * Sets minutes of waiting
+     *
+     * @param minutesOfWaiting parsed minutes of waiting
+     */
+    public void setMinutesOfWaiting(Double minutesOfWaiting) {
+        this.minutesOfWaiting = minutesOfWaiting;
+    }
+
+    /**
+     * Sets weapon type
+     *
+     * @param weaponType parsed weapon type
+     */
+    public void setWeaponType(WeaponType weaponType) {
+        this.weaponType = weaponType;
+    }
+
+    /**
+     * Sets mood
+     *
+     * @param mood parsed mood
+     */
+    public void setMood(Mood mood) {
+        this.mood = mood;
+    }
+
+    /**
+     * @return mood
+     */
     public Mood getMood() {
         return mood;
     }
 
+    /**
+     * Sets car
+     *
+     * @param car parsed car
+     */
+    public void setCar(Car car) {
+        this.car = car;
+    }
+
+    /**
+     * @return car
+     */
+    public Car getCar() {
+        return car;
+    }
+
+
+    /**
+     * Overrides {@code toString} of {@code Object}.
+     *
+     * @return string representation of Human Being
+     */
     @Override
     public String toString() {
         return "ID: " + this.id

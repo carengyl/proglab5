@@ -2,14 +2,14 @@ package commands;
 
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
-import exceptions.WrongArgTypeException;
+import exceptions.ValidationException;
 import util.OutputUtil;
 import util.Validators;
 
-public class RemoveByKeyCommand extends AbstractCommand {
+public class RemoveKeyCommand extends AbstractCommand {
     private final CollectionOfHumanBeings collection;
 
-    public RemoveByKeyCommand(CollectionOfHumanBeings collection) {
+    public RemoveKeyCommand(CollectionOfHumanBeings collection) {
         super("remove_key", 1, "Remove element from collection by @key", "@key - (long) unique key of element in collection");
         this.collection = collection;
     }
@@ -24,7 +24,7 @@ public class RemoveByKeyCommand extends AbstractCommand {
                     commandArgs[0]);
             collection.removeByKey(key);
             OutputUtil.printSuccessfulMessage("Deleted human being by key: " + key);
-        } catch (InvalidNumberOfArgsException | WrongArgTypeException e) {
+        } catch (InvalidNumberOfArgsException | ValidationException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }
     }

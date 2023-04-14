@@ -1,0 +1,14 @@
+<?xml version="1.0" encoding="UTF-8"?>
+<component inherit-compiler-output="true" inheritJdk="true">
+	<exclude-output/>
+	<contentEntry url="file://$MODULE_DIR$"/>
+	<levels>
+		<level name="Java EE 6-Java EE 6" value="project"/>
+		<level name="hibernate.validator" value="project"/>
+		<level name="springframework.boot.spring" value="project"/>
+		<level name="javax.validation.api" value="project"/>
+		<level name="javax.el.api" value="project"/>
+		<level name="glassfish.web.javax.el" value="project"/>
+		<level name="glassfish.web.el.impl" value="project"/>
+	</levels>
+</component>
