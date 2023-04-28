@@ -1,6 +1,7 @@
 package commands;
 
 import commandLine.CommandReader;
+import entities.HumanBeing;
 import exceptions.CommandExecutionException;
 import exceptions.InvalidNumberOfArgsException;
 import exceptions.ValidationException;
@@ -10,9 +11,7 @@ import util.Validators;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.ArrayDeque;
-import java.util.HashSet;
-import java.util.Set;
+import java.util.*;
 
 public class ExecuteScriptCommand extends AbstractCommand {
 
@@ -39,13 +38,22 @@ public class ExecuteScriptCommand extends AbstractCommand {
             } else {
                 fileHistory.add(fileName);
                 scriptReader.readCommandsFromFile(fileName);
-                ArrayDeque<String> commands = scriptReader.getCommandsFromScript();
+                ArrayList<String> commands = scriptReader.getCommandsFromScript();
                 if (commands.contains("execute_script " + commandArgs[0])) {
                     throw new CommandExecutionException("Script calls itself from inside. Loop possible");
                 }
-                for (String command : commands) {
+                for (int i=0; i < commands.size(); i++) {
+                    String command = commands.get(i);
                     OutputUtil.printSuccessfulMessage(command);
-                    CommandReader.getInvoker().performCommand(command);
+                    if (i <= commands.size()-HumanBeing.getNumberOfFields()-2) {
+                        CommandReader.getInvoker().performCommand(command,
+                                true,
+                                new ArrayList<>(commands.subList(i+1, i + 2 + HumanBeing.getNumberOfFields())));
+                    } else {
+                        CommandReader.getInvoker().performCommand(command,
+                                true,
+                                new ArrayList<>(commands.subList(i+1, commands.size())));
+                    }
                 }
                 fileHistory.remove(fileName);
             }

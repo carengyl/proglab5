@@ -1,12 +1,12 @@
 package util;
 
 import java.io.*;
-import java.util.ArrayDeque;
+import java.util.ArrayList;
 
 public class StreamUtil {
 
-    public ArrayDeque<String> streamToArrayOfCommands(BufferedInputStream input) throws IOException {
-        ArrayDeque<String> commands = new ArrayDeque<>();
+    public ArrayList<String> streamToArrayOfCommands(BufferedInputStream input) throws IOException {
+        ArrayList<String> commands = new ArrayList<>();
         BufferedReader br = new BufferedReader(new InputStreamReader(input));
         String line = br.readLine();
         while (line != null) {

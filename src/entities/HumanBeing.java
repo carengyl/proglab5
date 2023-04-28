@@ -254,6 +254,10 @@ public class HumanBeing implements Comparable<HumanBeing>{
         return coordinates.compareTo(humanBeing.getCoordinates());
     }
 
+    public static int getNumberOfFields() {
+        return HumanBeing.class.getDeclaredFields().length + Coordinates.class.getDeclaredFields().length + Car.class.getDeclaredFields().length - 8;
+    }
+
     /**
      * Overrides {@code toString} of {@code Object}.
      *

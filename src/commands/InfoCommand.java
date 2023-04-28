@@ -18,7 +18,9 @@ public class InfoCommand extends AbstractCommand {
     public void executeCommand(String[] commandArgs) {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            OutputUtil.printSuccessfulMessage("Collection from file: " + collection.getFileName() + "; initialized:" + collection.getInitDate() + "; number of elements: " + collection.getHumanBeings().size());
+            OutputUtil.printSuccessfulMessage("Collection from file: " + collection.getFileName() +
+                    "; initialized: " + collection.getInitDate() +
+                    "; number of elements: " + collection.getHumanBeings().size());
         } catch (InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }

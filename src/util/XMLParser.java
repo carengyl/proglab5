@@ -38,8 +38,7 @@ public class XMLParser {
             collection = new CollectionOfHumanBeings(filename, (HashMap<Long, HumanBeing>) xStream.fromXML(xmlText));
             Validators.validateClass(collection);
         } catch (ConversionException e) {
-            e.printStackTrace();
-            System.exit(1);
+            OutputUtil.printErrorMessage("Collection is corrupted. Unable to load this XML file: " + e.getMessage());
         }
         return collection;
     }

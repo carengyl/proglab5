@@ -27,7 +27,9 @@ public final class Validators {
         java.util.logging.Logger.getLogger("org.hibernate").setLevel(Level.OFF);
         ValidatorFactory validatorFactory = Validation.buildDefaultValidatorFactory();
         Validator validator = validatorFactory.getValidator();
-        for (long key: collection.getHumanBeings().keySet()) {
+        validatorFactory.close();
+        Set<Long> keysCopy = Set.copyOf(collection.getHumanBeings().keySet());
+        for (long key: keysCopy) {
             HumanBeing humanBeing = collection.getHumanBeings().get(key);
             Set<ConstraintViolation<Coordinates>> validatedCoordinates = validator.validate(humanBeing.getCoordinates());
             Set<ConstraintViolation<Car>> validatedCar = new HashSet<>();
@@ -38,18 +40,14 @@ public final class Validators {
             Set<ConstraintViolation<HumanBeing>> validatedHumanBeing = validator.validate(humanBeing);
             //todo 27.04.2023 NO SINGLETON, no System.exit
             if (!validatedHumanBeing.isEmpty() || !validatedCoordinates.isEmpty() || !validatedCar.isEmpty()) {
-                OutputUtil.printErrorMessage("XML file is corrupted.");
-                validatedHumanBeing.stream().map(ConstraintViolation::getMessage)
-                        .forEach(System.out::println);
-                validatedCoordinates.stream().map(ConstraintViolation::getMessage)
-                        .forEach(System.out::println);
-                validatedCar.stream().map(ConstraintViolation::getMessage)
-                        .forEach(System.out::println);
-                System.exit(1);
+                OutputUtil.printErrorMessage("HumanBeing is corrupted:");
+                validatedHumanBeing.stream().map(ConstraintViolation::getMessage).forEach(OutputUtil::printErrorMessage);
+                validatedCoordinates.stream().map(ConstraintViolation::getMessage).forEach(OutputUtil::printErrorMessage);
+                validatedCar.stream().map(ConstraintViolation::getMessage).forEach(OutputUtil::printErrorMessage);
+                collection.removeByKey(key);
             }
         }
-
-        OutputUtil.printSuccessfulMessage("Successfully loaded collection from file. Waiting for commands.");
+        OutputUtil.printSuccessfulMessage("Successfully loaded collection from file. Waiting for commands...");
     }
 
     public static void validateNumberOfArgs(String[] commandArgs, int numberOfArgs) throws InvalidNumberOfArgsException {

@@ -2,9 +2,11 @@ package commandLine;
 
 import commands.AbstractCommand;
 
+import commands.ComplexCommand;
 import util.CommandHistory;
 import util.OutputUtil;
 
+import java.util.ArrayList;
 import java.util.Arrays;
 import java.util.HashMap;
 
@@ -16,6 +18,8 @@ public class Invoker {
      * Hashmap that contains available commands and their string representation
      */
     private static final HashMap<String, AbstractCommand> AVAILABLE_COMMANDS = new HashMap<>();
+
+    private static final HashMap<String, ComplexCommand> COMPLEX_COMMANDS = new HashMap<>();
     /**
      * Command history field
      */
@@ -33,6 +37,11 @@ public class Invoker {
      */
     public void addCommand(AbstractCommand command) {
         AVAILABLE_COMMANDS.put(command.getName(), command);
+    }
+
+    public void addComplexCommand(AbstractCommand command) {
+        AVAILABLE_COMMANDS.put(command.getName(), command);
+        COMPLEX_COMMANDS.put(command.getName(), (ComplexCommand) command);
     }
 
     /**
@@ -54,16 +63,24 @@ public class Invoker {
      *
      * @param command string command and args
      */
-    public void performCommand(String command){
-        String[] splitString = command.split(" ");
+    public void performCommand(String command, boolean scriptUsage, ArrayList<String> complexData) {
+        String[] splitString = command.replaceAll("\s{2,}", " ").strip().split(" ");
         String commandName = splitString[0];
         String[] args = Arrays.copyOfRange(splitString, 1, splitString.length);
         if (AVAILABLE_COMMANDS.containsKey(commandName)) {
             AbstractCommand executableCommand = AVAILABLE_COMMANDS.get(commandName);
-            executableCommand.executeCommand(args);
+
+            if (scriptUsage && COMPLEX_COMMANDS.containsKey(executableCommand.getName())) {
+                COMPLEX_COMMANDS.get(executableCommand.getName()).executeComplexCommand(args, complexData);
+            } else {
+                executableCommand.executeCommand(args);
+
+            }
             commandHistory.addToHistory(commandName);
         } else {
-            OutputUtil.printErrorMessage(commandName + ": command not found, type \"help\" to see available commands");
+            if (!scriptUsage) {
+                OutputUtil.printErrorMessage(commandName + ": command not found, type \"help\" to see available commands");
+            }
         }
     }
 }

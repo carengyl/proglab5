@@ -55,6 +55,10 @@ public class Car {
         cool = (cost >= 10000000) | (horsePowers > 440) | carBrand.isCool();
     }
 
+    public static int getNumberOfFields() {
+        return Car.class.getDeclaredFields().length - 1;
+    }
+
     /**
      * @return Cool field
      */

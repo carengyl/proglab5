@@ -14,6 +14,10 @@ public class Client {
         try {
             XMLParser parser = new XMLParser();
             CollectionOfHumanBeings collection = parser.readFromXML(Path.of(System.getenv("XML_FILE")));
+            if (collection == null) {
+                OutputUtil.printSuccessfulMessage("Creating new Collection. Waiting for commands...");
+                collection = new CollectionOfHumanBeings(Path.of(System.getenv("XML_FILE")));
+            }
             CommandReader commandReader = new CommandReader(collection);
             commandReader.readCommandsFromConsole();
         } catch (IOException e) {
