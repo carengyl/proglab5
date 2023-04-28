@@ -5,7 +5,6 @@ import entities.CollectionOfHumanBeings;
 import util.OutputUtil;
 import util.ScriptReader;
 
-import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 

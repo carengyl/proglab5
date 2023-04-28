@@ -12,7 +12,7 @@ import java.time.format.DateTimeFormatter;
  * @author carengyl
  */
 @XStreamAlias("humanBeing")
-public class HumanBeing {
+public class HumanBeing implements Comparable<HumanBeing>{
 
     /**
      * Current ID field for ID generation
@@ -251,7 +251,7 @@ public class HumanBeing {
      * @return 1 if greater, -1 if less, 0 if equal
      */
     public int compareTo(HumanBeing humanBeing) {
-        return Coordinates.compare(this.coordinates, humanBeing.getCoordinates());
+        return coordinates.compareTo(humanBeing.getCoordinates());
     }
 
     /**

@@ -3,7 +3,7 @@ package commands;
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
 import exceptions.ValidationException;
-import util.HumanBeingCreator;
+import util.HumanBeingFactory;
 import util.OutputUtil;
 import util.Validators;
 
@@ -23,7 +23,7 @@ public class InsertCommand extends AbstractCommand {
                     "Key isn't unique",
                     Long::parseLong,
                     commandArgs[0]);
-            HumanBeingCreator creator = new HumanBeingCreator();
+            HumanBeingFactory creator = new HumanBeingFactory();
             creator.setVariables();
             collection.addByKey(key, creator.getCreatedHumanBeing());
         } catch (InvalidNumberOfArgsException | ValidationException | IllegalArgumentException e) {

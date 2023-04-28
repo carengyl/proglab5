@@ -6,7 +6,7 @@ import jakarta.validation.constraints.NotNull;
 /**
  * Data structure for Coordinates
  */
-public class Coordinates {
+public class Coordinates implements Comparable<Coordinates> {
     /**
      * X coordinate field
      */
@@ -64,13 +64,9 @@ public class Coordinates {
         return "(" + x + ";" + y + ")";
     }
 
-    /**
-     * @param a Coordinates A
-     * @param b Coordinates B
-     * @return -1 if A < B, if A > B, 0 if A == B
-     */
-    public static int compare(Coordinates a, Coordinates b) {
-        return Integer.max(Integer.compare(a.getX(), b.getX()), Integer.compare(a.getY(), b.getY()));
+    @Override
+    public int compareTo(Coordinates o) {
+        return Integer.max(Integer.compare(this.getX(), o.getX()), Integer.compare(this.getY(), o.getY()));
     }
 }
 

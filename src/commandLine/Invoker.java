@@ -52,7 +52,7 @@ public class Invoker {
     /**
      * Parses args and executes command
      *
-     * @param command
+     * @param command string command and args
      */
     public void performCommand(String command){
         String[] splitString = command.split(" ");

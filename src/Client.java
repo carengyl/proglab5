@@ -6,6 +6,9 @@ import util.XMLParser;
 import java.io.IOException;
 import java.nio.file.Path;
 
+/**
+ * Main class
+ */
 public class Client {
     public static void main(String[] args) {
         try {

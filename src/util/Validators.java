@@ -36,6 +36,7 @@ public final class Validators {
                 validatedCar = validator.validate(humanBeing.getCar());
             }
             Set<ConstraintViolation<HumanBeing>> validatedHumanBeing = validator.validate(humanBeing);
+            //todo 27.04.2023 NO SINGLETON, no System.exit
             if (!validatedHumanBeing.isEmpty() || !validatedCoordinates.isEmpty() || !validatedCar.isEmpty()) {
                 OutputUtil.printErrorMessage("XML file is corrupted.");
                 validatedHumanBeing.stream().map(ConstraintViolation::getMessage)
@@ -58,7 +59,7 @@ public final class Validators {
     }
 
     public static String validateStringInput(String inputMessage, boolean nullable, Scanner scanner) {
-        OutputUtil.printSuccessfulMessage(inputMessage + ((nullable) ? " (press Enter to skip):": ":"));
+        OutputUtil.printSuccessfulMessage(inputMessage + ((nullable) ? " (or press Enter to skip):": ":"));
         String input;
         do {
             try {

@@ -4,15 +4,19 @@ import entities.*;
 
 import java.util.Scanner;
 
-public class HumanBeingCreator {
+/**
+ * Class responsible for
+ */
+//TODO 27.04.2023 insert command from script
+public class HumanBeingFactory {
     private final HumanBeing createdHumanBeing;
     private final Scanner scanner = new Scanner(System.in);
 
-    public HumanBeingCreator(long id) {
+    public HumanBeingFactory(long id) {
         createdHumanBeing = new HumanBeing(id);
     }
 
-    public HumanBeingCreator() {
+    public HumanBeingFactory() {
         createdHumanBeing = new HumanBeing();
     }
 

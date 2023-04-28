@@ -9,6 +9,7 @@ import java.time.LocalDate;
 import java.time.format.DateTimeFormatter;
 import java.util.HashMap;
 import java.util.Objects;
+import java.util.Set;
 
 /**
  * Collection data structure
@@ -76,6 +77,13 @@ public class CollectionOfHumanBeings {
     }
 
     /**
+     * @param fileName new File name
+     */
+    public void setFileName(Path fileName) {
+        this.fileName = fileName;
+    }
+
+    /**
      * @return Initialization date
      */
     public String getInitDate() {
@@ -133,7 +141,8 @@ public class CollectionOfHumanBeings {
      * @param greaterKey given key
      */
     public void removeLowerKey(long greaterKey) {
-        for (long key: humanBeings.keySet()) {
+        Set<Long> keysCopy = Set.copyOf(humanBeings.keySet());
+        for(long key: keysCopy) {
             if (key < greaterKey) {
                 this.removeByKey(key);
             }

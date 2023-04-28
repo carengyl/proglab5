@@ -32,7 +32,7 @@ public class CountGreaterThanMoodCommand extends AbstractCommand {
                     greaterMoods++;
                 }
             }
-            OutputUtil.printErrorMessage("People with Mood greater than " + mood + ":" + greaterMoods);
+            OutputUtil.printSuccessfulMessage("People with Mood greater than " + mood + ":" + greaterMoods);
         } catch (InvalidNumberOfArgsException | ValidationException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }
