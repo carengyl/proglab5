@@ -11,17 +11,22 @@ import java.nio.file.Path;
  */
 public class Client {
     public static void main(String[] args) {
+        CollectionOfHumanBeings collection;
         try {
             XMLParser parser = new XMLParser();
-            CollectionOfHumanBeings collection = parser.readFromXML(Path.of(System.getenv("XML_FILE")));
+            Path filename = Path.of(System.getenv("XML_FILE"));
+            collection = parser.readFromXML(filename);
             if (collection == null) {
-                OutputUtil.printSuccessfulMessage("Creating new Collection. Waiting for commands...");
-                collection = new CollectionOfHumanBeings(Path.of(System.getenv("XML_FILE")));
+                OutputUtil.printSuccessfulMessage("Creating new Collection (it will be saved in: " +  filename
+                        + "). Waiting for commands...");
+                collection = new CollectionOfHumanBeings(filename);
             }
-            CommandReader commandReader = new CommandReader(collection);
-            commandReader.readCommandsFromConsole();
-        } catch (IOException e) {
-            OutputUtil.printErrorMessage(e.getMessage());
+        } catch (IOException | NullPointerException e) {
+            OutputUtil.printErrorMessage("Unable to get to the file.");
+            OutputUtil.printSuccessfulMessage("Creating new Collection, without file. Waiting for commands...");
+            collection = new CollectionOfHumanBeings(null);
         }
+        CommandReader commandReader = new CommandReader(collection);
+        commandReader.readCommandsFromConsole();
     }
 }

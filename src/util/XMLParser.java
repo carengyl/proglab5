@@ -1,7 +1,7 @@
 package util;
 
 import com.thoughtworks.xstream.XStream;
-import com.thoughtworks.xstream.converters.ConversionException;
+import com.thoughtworks.xstream.XStreamException;
 import com.thoughtworks.xstream.security.AnyTypePermission;
 import entities.Car;
 import entities.CollectionOfHumanBeings;
@@ -37,8 +37,8 @@ public class XMLParser {
         try {
             collection = new CollectionOfHumanBeings(filename, (HashMap<Long, HumanBeing>) xStream.fromXML(xmlText));
             Validators.validateClass(collection);
-        } catch (ConversionException e) {
-            OutputUtil.printErrorMessage("Collection is corrupted. Unable to load this XML file: " + e.getMessage());
+        } catch (XStreamException e) {
+            OutputUtil.printErrorMessage("Collection is corrupted. Unable to load this XML file: " + filename);
         }
         return collection;
     }

@@ -1,5 +1,7 @@
 package commands;
 
+import exceptions.NoUserInputException;
+
 /**
  * Abstract class of command
  */
@@ -54,7 +56,7 @@ public abstract class AbstractCommand {
     /**
      * @param commandArgs list of string args
      */
-    public abstract void executeCommand(String[] commandArgs);
+    public abstract void executeCommand(String[] commandArgs) throws NoUserInputException;
 
     /**
      * Overrides {@code toString} of {@code Object}

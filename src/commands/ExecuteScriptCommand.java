@@ -4,6 +4,7 @@ import commandLine.CommandReader;
 import entities.HumanBeing;
 import exceptions.CommandExecutionException;
 import exceptions.InvalidNumberOfArgsException;
+import exceptions.NoUserInputException;
 import exceptions.ValidationException;
 import util.OutputUtil;
 import util.ScriptReader;
@@ -25,7 +26,7 @@ public class ExecuteScriptCommand extends AbstractCommand {
     }
 
     @Override
-    public void executeCommand(String[] commandArgs) {
+    public void executeCommand(String[] commandArgs) throws NoUserInputException {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
             Path fileName = Validators.validateArg(arg -> true,

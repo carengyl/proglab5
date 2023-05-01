@@ -2,13 +2,13 @@ package commands;
 
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
+import exceptions.NoUserInputException;
 import util.OutputUtil;
 import util.Validators;
 import util.XMLParser;
 
 import java.io.IOException;
 import java.nio.file.Path;
-import java.util.Objects;
 import java.util.Scanner;
 
 
@@ -21,7 +21,7 @@ public class SaveCommand extends AbstractCommand {
     }
 
     @Override
-    public void executeCommand(String[] commandArgs) {
+    public void executeCommand(String[] commandArgs) throws NoUserInputException {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
             XMLParser xmlParser = new XMLParser();
@@ -29,11 +29,11 @@ public class SaveCommand extends AbstractCommand {
             OutputUtil.printSuccessfulMessage("Collection saved to file " + collection.getFileName());
         } catch (InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());
-        } catch (IOException e) {
+        } catch (NullPointerException | IOException e) {
             OutputUtil.printErrorMessage("Unable to get to the file.");
             Scanner scanner = new Scanner(System.in);
             String newFile = Validators.validateStringInput("Please enter path to backup file", true, scanner);
-            if (!Objects.equals(newFile, "")) {
+            if (newFile != null) {
                 collection.setFileName(Path.of(newFile));
                 this.executeCommand(commandArgs);
             }

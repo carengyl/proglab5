@@ -2,6 +2,7 @@ package commands;
 
 import commandLine.CommandReader;
 import exceptions.InvalidNumberOfArgsException;
+import exceptions.NoUserInputException;
 import util.OutputUtil;
 import util.Validators;
 
@@ -13,7 +14,7 @@ public class ExitCommand extends AbstractCommand {
     }
 
     @Override
-    public void executeCommand(String[] commandArgs) {
+    public void executeCommand(String[] commandArgs) throws NoUserInputException {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
             boolean userInput = Validators.validateBooleanInput("Shut down (everything not saved will be lost)",

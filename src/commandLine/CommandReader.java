@@ -2,9 +2,11 @@ package commandLine;
 
 import commands.*;
 import entities.CollectionOfHumanBeings;
+import exceptions.NoUserInputException;
 import util.OutputUtil;
 import util.ScriptReader;
 
+import java.util.NoSuchElementException;
 import java.util.Scanner;
 
 
@@ -66,8 +68,13 @@ public class CommandReader {
         Scanner scanner = new Scanner(System.in);
         while (working) {
             OutputUtil.printSuccessfulMessageOneStrip("> ");
-            String line = scanner.nextLine().replaceAll("\s{2,}", " ").strip();
-            invoker.performCommand(line, false, null);
+            try {
+                String line = scanner.nextLine().replaceAll("\s{2,}", " ").strip();
+                invoker.performCommand(line, false, null);
+            } catch (NoSuchElementException | NoUserInputException e) {
+                OutputUtil.printErrorMessage(e.getMessage());
+                working = false;
+            }
         }
     }
 

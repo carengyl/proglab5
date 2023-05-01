@@ -3,6 +3,7 @@ package commandLine;
 import commands.AbstractCommand;
 
 import commands.ComplexCommand;
+import exceptions.NoUserInputException;
 import util.CommandHistory;
 import util.OutputUtil;
 
@@ -63,7 +64,7 @@ public class Invoker {
      *
      * @param command string command and args
      */
-    public void performCommand(String command, boolean scriptUsage, ArrayList<String> complexData) {
+    public void performCommand(String command, boolean scriptUsage, ArrayList<String> complexData) throws NoUserInputException {
         String[] splitString = command.replaceAll("\s{2,}", " ").strip().split(" ");
         String commandName = splitString[0];
         String[] args = Arrays.copyOfRange(splitString, 1, splitString.length);

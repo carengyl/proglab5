@@ -1,6 +1,7 @@
 package util;
 
 import entities.*;
+import exceptions.NoUserInputException;
 import exceptions.ValidationException;
 
 import java.util.*;
@@ -9,7 +10,6 @@ import java.util.*;
  * Class responsible for creating Human being
  */
 
-//TODO 27.04.2023 insert command from script
 public class HumanBeingFactory {
     private final HumanBeing createdHumanBeing;
     private final Scanner scanner = new Scanner(System.in);
@@ -22,7 +22,7 @@ public class HumanBeingFactory {
         createdHumanBeing = new HumanBeing();
     }
 
-    private void setName() {
+    private void setName() throws NoUserInputException {
         String name = Validators.validateStringInput("Enter human's name", false, scanner);
         createdHumanBeing.setName(name);
     }
@@ -34,7 +34,7 @@ public class HumanBeingFactory {
                 name));
     }
 
-    private void setCoordinates() {
+    private void setCoordinates() throws NoUserInputException {
         createdHumanBeing.setCoordinates(new Coordinates(setX(), setY()));
     }
 
@@ -42,7 +42,7 @@ public class HumanBeingFactory {
         createdHumanBeing.setCoordinates(new Coordinates(this.setX(x), this.setY(y)));
     }
 
-    private Integer setY() {
+    private Integer setY() throws NoUserInputException {
         return Validators.validateInput(arg -> ((int) arg) > Coordinates.getMIN_Y(),
                 "Enter integer (long) Y coordinate, it should be greater than " + Coordinates.getMIN_Y(),
                 "Expected long type number, try again:",
@@ -59,7 +59,7 @@ public class HumanBeingFactory {
                 y);
     }
 
-    private Integer setX() {
+    private Integer setX() throws NoUserInputException {
         return Validators.validateInput(arg -> true,
                 "Enter integer (long) X",
                 "Expected long type number, try again:",
@@ -76,7 +76,7 @@ public class HumanBeingFactory {
                 x);
     }
 
-    private void setRealHero() {
+    private void setRealHero() throws NoUserInputException {
         boolean realHero = Validators.validateBooleanInput("Is he/she a real hero", scanner);
         createdHumanBeing.setRealHero(realHero);
     }
@@ -88,7 +88,7 @@ public class HumanBeingFactory {
                 realHero));
     }
 
-    private void setHasToothpick() {
+    private void setHasToothpick() throws NoUserInputException {
         boolean hasToothpick = Validators.validateBooleanInput("Has a toothpick", scanner);
         createdHumanBeing.setHasToothpick(hasToothpick);
     }
@@ -100,7 +100,7 @@ public class HumanBeingFactory {
                 hasToothPick));
     }
 
-    private void setImpactSpeed() {
+    private void setImpactSpeed() throws NoUserInputException {
         Double impactSpeed = Validators.validateInput(arg -> ((Double) arg) > HumanBeing.getMinImpactSpeed(),
                 "Enter real (double) impact speed m/s, it should be greater than " + HumanBeing.getMinImpactSpeed(),
                 "Expected double type, try again:",
@@ -124,7 +124,7 @@ public class HumanBeingFactory {
         createdHumanBeing.setImpactSpeed(parsedImpactSpeed);
     }
 
-    private void setMinutesOfWaitingSpeed() {
+    private void setMinutesOfWaitingSpeed() throws NoUserInputException {
         Double minutesOfWaiting = Validators.validateInput(arg -> true,
                 "Enter real (double) minutes of waiting",
                 "Expected double type, try again:",
@@ -148,7 +148,7 @@ public class HumanBeingFactory {
         createdHumanBeing.setMinutesOfWaiting(parsedMinutesOfWaiting);
     }
 
-    private void setWeaponType() {
+    private void setWeaponType() throws NoUserInputException {
         Integer weaponTypeNumber = Validators.validateEnumInput("Pick a weapon:\n" + WeaponType.show(),
                 WeaponType.values().length,
                 false,
@@ -164,7 +164,7 @@ public class HumanBeingFactory {
         createdHumanBeing.setWeaponType(WeaponType.values()[weaponTypeNumber]);
     }
 
-    private void setMood() {
+    private void setMood() throws NoUserInputException {
         Integer moodNumber = Validators.validateEnumInput("Pick a mood:\n" + Mood.show(),
                 Mood.values().length,
                 false,
@@ -180,7 +180,7 @@ public class HumanBeingFactory {
         createdHumanBeing.setMood(Mood.values()[moodNumber]);
     }
 
-    private void setCar() {
+    private void setCar() throws NoUserInputException {
         String carName = Validators.validateStringInput("Enter car's name, if skipped, whole car creation will be skipped",
                 true,
                 scanner);
@@ -205,7 +205,7 @@ public class HumanBeingFactory {
         }
     }
 
-    private Integer setCarCost() {
+    private Integer setCarCost() throws NoUserInputException {
         return Validators.validateInput(arg -> ((int) arg) > 0,
                 "Enter car's cost in tugriks (positive integer)",
                 "Expected integer type, try again:",
@@ -222,7 +222,7 @@ public class HumanBeingFactory {
                 cost);
     }
 
-    private Integer setCarHorsePowers() {
+    private Integer setCarHorsePowers() throws NoUserInputException {
         return Validators.validateInput(arg -> ((int) arg) > 0,
                 "Enter car's engine power in h.p. (positive integer):",
                 "Expected integer type, try again:",
@@ -239,7 +239,7 @@ public class HumanBeingFactory {
                 horsePowers);
     }
 
-    private CarBrand setCarBrand() {
+    private CarBrand setCarBrand() throws NoUserInputException {
         Integer carBrandNumber = Validators.validateEnumInput("Pick a car brand:\n" + CarBrand.show(),
                 CarBrand.values().length,
                 false,
@@ -254,7 +254,7 @@ public class HumanBeingFactory {
                 carBrand);
     }
 
-    public void setVariables() {
+    public void setVariables() throws NoUserInputException {
         this.setName();
         this.setCoordinates();
         this.setRealHero();
@@ -277,7 +277,7 @@ public class HumanBeingFactory {
             this.setWeaponType(data.get(7));
             this.setMood(data.get(8));
             if (data.size() >= HumanBeing.getNumberOfFields()) {
-                this.setCar(data.subList(9, data.size()-1));
+                this.setCar(data.subList(9, data.size()));
             } else {
                 createdHumanBeing.setCar(null);
             }

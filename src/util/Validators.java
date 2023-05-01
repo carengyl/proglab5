@@ -5,6 +5,7 @@ import entities.CollectionOfHumanBeings;
 import entities.Coordinates;
 import entities.HumanBeing;
 import exceptions.InvalidNumberOfArgsException;
+import exceptions.NoUserInputException;
 import exceptions.ValidationException;
 
 import java.util.HashSet;
@@ -38,7 +39,6 @@ public final class Validators {
                 validatedCar = validator.validate(humanBeing.getCar());
             }
             Set<ConstraintViolation<HumanBeing>> validatedHumanBeing = validator.validate(humanBeing);
-            //todo 27.04.2023 NO SINGLETON, no System.exit
             if (!validatedHumanBeing.isEmpty() || !validatedCoordinates.isEmpty() || !validatedCar.isEmpty()) {
                 OutputUtil.printErrorMessage("HumanBeing is corrupted:");
                 validatedHumanBeing.stream().map(ConstraintViolation::getMessage).forEach(OutputUtil::printErrorMessage);
@@ -56,9 +56,9 @@ public final class Validators {
         }
     }
 
-    public static String validateStringInput(String inputMessage, boolean nullable, Scanner scanner) {
+    public static String validateStringInput(String inputMessage, boolean nullable, Scanner scanner) throws NoUserInputException {
         OutputUtil.printSuccessfulMessage(inputMessage + ((nullable) ? " (or press Enter to skip):": ":"));
-        String input;
+        String input = "";
         do {
             try {
                 input = scanner.nextLine();
@@ -69,16 +69,15 @@ public final class Validators {
                     continue;
                 }
             } catch (NoSuchElementException e) {
-                    OutputUtil.printErrorMessage(e.getMessage());
-                    continue;
+                throw new NoUserInputException();
             }
             return input;
         } while (true);
     }
 
-    public static Boolean validateBooleanInput(String inputMessage, Scanner scanner) {
+    public static Boolean validateBooleanInput(String inputMessage, Scanner scanner) throws NoUserInputException {
         OutputUtil.printSuccessfulMessage(inputMessage + ", y/n? ");
-        String input;
+        String input = "";
         do {
             try {
                 input = scanner.nextLine();
@@ -87,8 +86,7 @@ public final class Validators {
                     continue;
                 }
             } catch (NoSuchElementException e) {
-                OutputUtil.printErrorMessage(e.getMessage());
-                continue;
+                throw new NoUserInputException();
             }
             input = input.strip();
             switch (input.toLowerCase()) {
@@ -99,7 +97,7 @@ public final class Validators {
         } while (true);
     }
 
-    public static Integer validateEnumInput(String inputMessage, int enumLength, boolean nullable, Scanner scanner) {
+    public static Integer validateEnumInput(String inputMessage, int enumLength, boolean nullable, Scanner scanner) throws NoUserInputException {
         OutputUtil.printSuccessfulMessage(inputMessage);
         OutputUtil.printSuccessfulMessage("Pick a number" + ((nullable) ? " or press Enter to skip: ": ": "));
         String input;
@@ -122,7 +120,7 @@ public final class Validators {
             } catch (IllegalArgumentException e) {
                 OutputUtil.printErrorMessage("Pick a number: ");
             } catch (NoSuchElementException e) {
-                OutputUtil.printErrorMessage(e.getMessage());
+                throw new NoUserInputException();
             }
         } while (true);
     }
@@ -133,7 +131,7 @@ public final class Validators {
                                       String wrongCaseMessage,
                                       Function<String, T> function,
                                       Boolean nullable,
-                                      Scanner scanner) {
+                                      Scanner scanner) throws NoUserInputException {
         OutputUtil.printSuccessfulMessage(inputMessage + ((nullable) ? " (press Enter to skip):": ":"));
         String input;
         T value;
@@ -150,6 +148,8 @@ public final class Validators {
             } catch (IllegalArgumentException e) {
                 OutputUtil.printErrorMessage(errorMessage);
                 continue;
+            } catch (NoSuchElementException e) {
+                throw new NoUserInputException();
             }
             if (predicate.test(value)) {
                 return value;

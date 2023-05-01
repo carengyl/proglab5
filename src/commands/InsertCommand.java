@@ -2,6 +2,7 @@ package commands;
 
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
+import exceptions.NoUserInputException;
 import exceptions.ValidationException;
 import util.HumanBeingFactory;
 import util.OutputUtil;
@@ -18,7 +19,7 @@ public class InsertCommand extends AbstractCommand implements ComplexCommand{
     }
 
     @Override
-    public void executeCommand(String[] commandArgs) {
+    public void executeCommand(String[] commandArgs) throws NoUserInputException {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
             long key = Validators.validateArg(arg -> (!collection.getHumanBeings().containsKey((long) arg)),

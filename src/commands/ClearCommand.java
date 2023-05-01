@@ -2,6 +2,7 @@ package commands;
 
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
+import exceptions.NoUserInputException;
 import util.OutputUtil;
 import util.Validators;
 
@@ -15,10 +16,10 @@ public class ClearCommand extends AbstractCommand {
         this.collection = collection;
     }
     @Override
-    public void executeCommand(String[] commandArgs) {
+    public void executeCommand(String[] commandArgs) throws NoUserInputException {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
-            boolean userInput = Validators.validateBooleanInput("You're going to delete all collection. Are you sure",
+            boolean userInput = Validators.validateBooleanInput("You're going to delete all elements from collection. Are you sure",
                     new Scanner(System.in));
             if (userInput) {
                 collection.getHumanBeings().clear();

@@ -1,7 +1,9 @@
 package commands;
 
+import commandLine.CommandReader;
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
+import exceptions.NoUserInputException;
 import exceptions.ValidationException;
 import util.HumanBeingFactory;
 import util.OutputUtil;
@@ -22,14 +24,17 @@ public class UpdateCommand extends AbstractCommand implements ComplexCommand {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
             long id = Validators.validateArg(arg -> (collection.checkForId((long) arg)),
-                    "Key isn't unique",
+                    "There is no Human Being with id: " + commandArgs[0],
                     Long::parseLong,
                     commandArgs[0]);
             HumanBeingFactory creator = new HumanBeingFactory(id);
             creator.setVariables();
             collection.updateById(id, creator.getCreatedHumanBeing());
+            OutputUtil.printSuccessfulMessage("Updated human being by id:" + commandArgs[0]);
         } catch (InvalidNumberOfArgsException | ValidationException e) {
             OutputUtil.printErrorMessage(e.getMessage());
+        } catch (NoUserInputException e) {
+            CommandReader.toggleProgram();
         }
     }
 
@@ -38,12 +43,13 @@ public class UpdateCommand extends AbstractCommand implements ComplexCommand {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
             long id = Validators.validateArg(arg -> (collection.checkForId((long) arg)),
-                    "Key isn't unique",
+                    "There is no human being with id: " + commandArgs[0],
                     Long::parseLong,
                     commandArgs[0]);
             HumanBeingFactory creator = new HumanBeingFactory(id);
             creator.setVariables(complexData);
             collection.updateById(id, creator.getCreatedHumanBeing());
+            OutputUtil.printSuccessfulMessage("Updated human being by id:" + commandArgs[0]);
         } catch (ValidationException | InvalidNumberOfArgsException e) {
             OutputUtil.printErrorMessage(e.getMessage());
         }

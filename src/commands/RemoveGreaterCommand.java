@@ -2,6 +2,7 @@ package commands;
 
 import entities.CollectionOfHumanBeings;
 import exceptions.InvalidNumberOfArgsException;
+import exceptions.NoUserInputException;
 import util.HumanBeingFactory;
 import util.OutputUtil;
 import util.Validators;
@@ -16,13 +17,13 @@ public class RemoveGreaterCommand extends AbstractCommand{
     }
 
     @Override
-    public void executeCommand(String[] commandArgs) {
+    public void executeCommand(String[] commandArgs) throws NoUserInputException {
         try {
             Validators.validateNumberOfArgs(commandArgs, this.getNumberOfArgs());
             HumanBeingFactory creator = new HumanBeingFactory();
             creator.setVariables();
             for (long key: collection.getHumanBeings().keySet()) {
-                if (collection.getHumanBeings().get(key).compareTo(creator.getCreatedHumanBeing()) == 1) {
+                if (collection.getHumanBeings().get(key).compareTo(creator.getCreatedHumanBeing()) > 0) {
                    collection.removeByKey(key);
                 }
             }
